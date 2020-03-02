@@ -1,0 +1,11 @@
+Package: metabolomicsWorkbenchR
+Type: Package
+Title: Metabolomics Workbench RESTful API
+Version: 0.0.1
+Author: Gavin lloyd
+Maintainer: Gavin Lloyd <g.r.lloyd@bham.ac.uk>
+Description: Provided functions for interfacing with the Metabolomics Workbench RESTful API to access study information and data.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.0.1
