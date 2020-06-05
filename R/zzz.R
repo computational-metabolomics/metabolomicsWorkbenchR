@@ -1,6 +1,6 @@
 .onLoad <-
-    function(libname = find.package('workbencheR'),
-        pkgname = 'workbencherR')
+    function(libname = find.package('metabolomicsWorkbenchR'),
+        pkgname = 'metabolomicsWorkbenchR')
     {
         options('BASE_URL' = 'https://www.metabolomicsworkbench.org/rest/')
 
@@ -73,3 +73,6 @@ workbench_get_study=function(input_item,output_item,output_format=NULL,expected=
     }
     return(out)
 }
+
+
+
