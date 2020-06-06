@@ -10,24 +10,15 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0
 Collate: 
-    'analysis_data.R'
     'parse_fcns.R'
     'generics.R'
     'class_def.R'
     'constants.R'
-    'study_analysis.R'
-    'study_data.R'
-    'study_disease.R'
-    'study_factors.R'
-    'study_metabolites.R'
-    'study_number_metab.R'
-    'study_source.R'
-    'study_species.R'
-    'study_summary.R'
-    'study_untarg.R'
-    'zzz.R'
 Imports: data.table,
-    httr
+    httr,
+    jsonlite,
+    methods,
+    utils
 Suggests: 
     testthat,
     covr

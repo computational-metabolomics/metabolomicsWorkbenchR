@@ -1,4 +1,6 @@
 #' @include generics.R parse_fcns.R
+#' @import methods
+#' @import utils
 
 ############################## BASE ##########################################
 mw_base = function(private,locked){
@@ -162,9 +164,9 @@ setMethod(f = 'is_valid',
         length_valid2 = length(input_value[2])==1
         length_valid3 = length(input_value[3])==1
         
-        range_valid1 = as.numeric(input_value1) >= context@mz_range[1] & input_value1 <= context@mz_range[2]
-        ion_valid = input_value2 %in% context@ion_types
-        range_valid3 = as.numeric(input_value3) >= context@tol_range[1] & input_value3 <= context@tol_range[2]
+        range_valid1 = as.numeric(input_value[1]) >= context@mz_range[1] & input_value[1] <= context@mz_range[2]
+        ion_valid = input_value[2] %in% context@ion_types
+        range_valid3 = as.numeric(input_value[3]) >= context@tol_range[1] & input_value[3] <= context@tol_range[2]
         
         err=list()
         if (!input_valid) {
@@ -301,6 +303,30 @@ mw_output_item = function(name,fields,inputs,parse_fcn,match) {
 #' @export
 mw_query = function(context,input_item,input_value,output_item,...) {
     
+    if (is.character(context)) {
+        if (context %in% names(metabolomicsWorkbenchR::context)) {
+            context=metabolomicsWorkbenchR::context[[context]]
+        } else {
+            stop(paste0(context, " is not a valid context."))
+        }
+    }
+    
+    if (is.character(input_item)) {
+        if (input_item %in% names(metabolomicsWorkbenchR::input_item)) {
+            input_item=metabolomicsWorkbenchR::input_item[[input_item]]
+        } else {
+            stop(paste0(input_item, " is not a valid input_item."))
+        }
+    }
+    
+    if (is.character(output_item)) {
+        if (output_item %in% names(metabolomicsWorkbenchR::output_item)) {
+            output_item=metabolomicsWorkbenchR::output_item[[output_item]]
+        } else {
+            stop(paste0(output_item, " is not a valid input_item."))
+        }
+    }
+    
     out=new('mw_query',
         context = context,
         input_item = input_item,
@@ -325,6 +351,7 @@ mw_query = function(context,input_item,input_value,output_item,...) {
 #' @export
 #' @import data.table
 #' @import httr
+#' @importFrom jsonlite fromJSON
 setMethod(f = 'do_query',
     signature = 'mw_query',
     definition = function(Q) {
@@ -333,6 +360,8 @@ setMethod(f = 'do_query',
         is_valid(Q$context,Q$input_item$name,Q$input_value,Q$output_item$name)
         # check the input pattern
         check_pattern(Q$input_item,Q$input_value,Q$output_item$match)
+        # check the output_item and input_item are compatible
+        check_puts(Q$input_item,Q$output_item)
         
         # build the url
         str=paste('https://www.metabolomicsworkbench.org/rest',
@@ -342,24 +371,64 @@ setMethod(f = 'do_query',
             paste(Q$output_item$name,collapse=',',sep=''),
             sep='/')
         print(str)
+        
+        
         out = httr::GET(
             url=str
         )
-        out=httr::content(out,'parsed')
         
-        if (length(out)==0) {
-            message('There were no results for your query.')
-            return(NULL)
+        
+        if (out$headers$`content-type`=="application/json") {
+            out=httr::content(out,as='text',encoding = 'UTF-8')
+            out=fromJSON(out)
+            
+            if (length(out)==0) {
+                message('There were no results for your query.')
+                return(NULL)
+            }
+            
+            # reformat the parsed content according to the output_item
+            out = Q$output_item$parse_fcn(out,Q)
+            
+        } else if (out$headers$`content-type`=="application/x-download") {
+            
+            if ("content-disposition" %in% names(out$headers)) {
+                if (grepl('txt',out$headers$`content-disposition`) | 
+                        grepl('csv',out$headers$`content-disposition`)) {
+                    # try and read
+                    out=httr::content(out,as='text',encoding = 'UTF-8')
+                    out=read.delim(text=out,sep='\t')
+                    
+                    if (length(out)==0) {
+                        message('There were no results for your query.')
+                        return(NULL)
+                    }
+                    
+                    out = Q$output_item$parse_fcn(out,Q)
+                }
+            }
+        } else if (out$headers$`content-type`=="text/plain; charset=UTF-8") {
+            # datatable
+            out=httr::content(out,as='text',encoding = 'UTF-8')
+            out=read.delim(text=out,sep='\t')
+            
+            if (length(out)==0) {
+                message('There were no results for your query.')
+                return(NULL)
+            }
+            
+            out = Q$output_item$parse_fcn(out,Q)
+        } else {
+            stop('Unexpected mime type')
         }
         
-        # reformat the parsed content according to the output_item
-        out = Q$output_item$parse_fcn(out,Q)
+        
+        
         
         return(out)
     }
 )
 
-#' @export
 setMethod(f = 'check_pattern',
     signature = 'mw_input_item',
     definition = function(I,input_value,match) {
@@ -373,3 +442,14 @@ setMethod(f = 'check_pattern',
     }
 )
 
+setMethod(f = 'check_puts',
+    signature = 'mw_input_item',
+    definition = function(input_item,output_item) {
+        valid = input_item$name %in% output_item$inputs
+        if (!valid) {
+            stop(paste0('The input_value is not compatible with the output_item.'))
+        } else {
+            return(TRUE)
+        }
+    }
+)

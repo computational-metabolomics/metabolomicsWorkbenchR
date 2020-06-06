@@ -6,3 +6,6 @@ setGeneric("do_query",function(Q)standardGeneric("do_query"))
 
 #' @export
 setGeneric("check_pattern",function(I,input_value,match)standardGeneric("check_pattern"))
+
+#' @export
+setGeneric("check_puts",function(input_item,output_item)standardGeneric("check_puts"))

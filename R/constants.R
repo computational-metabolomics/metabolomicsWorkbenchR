@@ -13,7 +13,7 @@ context = list()
 
 context$study = mw_context(
     name = 'study',
-    input_items = c('study_id','study_title','institute','last_name','analysis_id','metabolite_id'),
+    input_items = c('study_id','study_title','institute','last_name','analysis_id','metabolite_id','ignored'),
     output_items = c('summary','factors','analysis','metabolites','mwtab','source','species','disease','number_of_metabolites','data','datatable','untarg_studies','untarg_factors','untarg_data','metabolite_info'),
     allow = 'one'
 )
@@ -107,6 +107,12 @@ input_item$last_name = mw_input_item(
         exact='*',
         partial='*')
 )
+input_item$ignored = mw_input_item(
+    name = 'study_id',
+    pattern = list(
+        exact='*',
+        partial='*')
+)
 output_item$metabolite_info=mw_output_item(
     name='summary',
     fields=c('metabolite_id','metabolite_name','refmet_name',
@@ -141,3 +147,94 @@ output_item$factors=mw_output_item(
     parse_fcn=parse_factors
 )
 
+output_item$analysis=mw_output_item(
+    name='analysis',
+    fields=c('study_id','analysis_id','analysis_summary','analysis_type',
+        'ms_instrument_name','ms_instrument_type','ms_type',
+        'ion_mode','nmr_instrument_type','nmr_experiment_type',
+        'nmr_spectrometer_frequency','nmr_solvent'),
+    inputs=c('study_id','study_title','institute','last_name'),
+    match='partial',
+    parse_fcn=parse_data_frame
+)
+
+output_item$metabolites=mw_output_item(
+    name='metabolites',
+    fields=c('study_id','analysis_id', 'analysis_summary','metabolite_name',
+        'refmet_name' ,'pubchem_id','other_id','other_id_type'),
+    inputs=c('study_id','analysis_id'),
+    match='exact',
+    parse_fcn=parse_data_frame
+)
+
+output_item$species=mw_output_item(
+    name='species',
+    fields=c('study_id','latin_name','common_name'),
+    inputs=c('study_id','study_title','institute','last_name'),
+    match='partial',
+    parse_fcn=parse_data_frame
+)
+
+output_item$source=mw_output_item(
+    name='source',
+    fields=c('study_id','sample_source'),
+    inputs=c('study_id','study_title','institute','last_name'),
+    match='partial',
+    parse_fcn=parse_data_frame
+)
+
+output_item$disease=mw_output_item(
+    name='disease',
+    fields=c('study_id','disease'),
+    inputs=c('study_id','study_title','institute','last_name'),
+    match='partial',
+    parse_fcn=parse_data_frame
+)
+
+output_item$untarg_studies=mw_output_item(
+    name='untarg_studies',
+    fields=c('study_id','analysis_id','analysis_display', 'study_title', 'subject_species', 'institute'),
+    inputs=c('study_id'),
+    match='partial',
+    parse_fcn=parse_data_frame
+)
+
+output_item$untarg_factors=mw_output_item(
+    name='untarg_factors',
+    fields=c(''),
+    inputs=c('analysis_id'),
+    match='exact',
+    parse_fcn=parse_untarg_factors
+)
+
+output_item$data=mw_output_item(
+    name='data',
+    fields=c('study_id','analysis_id','analysis_summary','metabolite_name','metabolite_id','refmet_name','units','data'),
+    inputs=c('study_id'),
+    match='exact',
+    parse_fcn=parse_data
+)
+
+output_item$mwtab=mw_output_item(
+    name='mwtab',
+    fields=c(''),
+    inputs=c('study_id','analysis_id'),
+    match='exact',
+    parse_fcn=function(x,y){return(x)}
+)
+
+output_item$untarg_data=mw_output_item(
+    name='untarg_data',
+    fields=c(''),
+    inputs=c('analysis_id'),
+    match='exact',
+    parse_fcn=parse_untarg_data
+)
+
+output_item$datatable=mw_output_item(
+    name='datatable',
+    fields=c(''),
+    inputs=c('analysis_id'),
+    match='exact',
+    parse_fcn=parse_datatable
+)
