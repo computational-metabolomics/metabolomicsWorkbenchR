@@ -1,5 +1,5 @@
 
-parse_data_frame=function(out,Q) {
+parse_data_frame=function(out,output_item) {
     
     # force to list of lists in case of length = 1
     if (!is.list(out[[1]])) {
@@ -17,8 +17,8 @@ parse_data_frame=function(out,Q) {
     
     
     # create data.frame with expected return column names
-    expected = as.data.frame(matrix(NA,nrow=0,ncol=length(Q$output_item$fields)))
-    colnames(expected) = Q$output_item$fields
+    expected = as.data.frame(matrix(NA,nrow=0,ncol=length(output_item$fields)))
+    colnames(expected) = output_item$fields
     # add it to the list
     out[[length(out)+1]]=expected
     
@@ -31,13 +31,13 @@ parse_data_frame=function(out,Q) {
     return(out)
 }
 
-parse_factors=function(out,Q) {
+parse_factors=function(out,output_item) {
     
     # parse output to data.frame
-    out_orig = parse_data_frame(out,Q)
+    out_orig = parse_data_frame(out,output_item)
     
     # create a list with factors for each sample_id
-    u = unique(out_orig$study_id)
+    u = unioutput_itemue(out_orig$study_id)
     OUT=list()
     
     for (id in u) {
@@ -47,14 +47,14 @@ parse_factors=function(out,Q) {
         # expand factors
         m=as.data.frame(matrix(NA,nrow=nrow(out),ncol=20)) # assume no more than 20 factors for a study
         
-        for (k in seq(from=1,to=nrow(out))) {
+        for (k in seoutput_item(from=1,to=nrow(out))) {
             
             x=out$factors[k]
             
             # generate a data.frame from the factors by splitting at the pipes
             at_pipe=strsplit(x,'|',fixed=TRUE)[[1]]
             
-            for (j in seq(from=1, to=length(at_pipe))) {
+            for (j in seoutput_item(from=1, to=length(at_pipe))) {
                 # split each factor at colon
                 at_colon=strsplit(at_pipe[[j]],':',fixed=TRUE)[[1]]
                 
@@ -68,7 +68,7 @@ parse_factors=function(out,Q) {
             }
         }
         
-        m=m[,seq(from=1,to=length(at_pipe)),drop=FALSE] # set strings to factors
+        m=m[,seoutput_item(from=1,to=length(at_pipe)),drop=FALSE] # set strings to factors
         
         m=as.data.frame(lapply(m,factor))
         
@@ -83,7 +83,7 @@ parse_factors=function(out,Q) {
     return(OUT)
 }
 
-parse_untarg_factors=function(out,Q) {
+parse_untarg_factors=function(out,output_item) {
     df = as.data.frame(unlist(out))
     # remove number
     df$group=trimws(gsub(pattern='^[0-9]+.',replacement='',x=rownames(df)))
@@ -100,7 +100,7 @@ parse_untarg_factors=function(out,Q) {
     return(df)
 }
 
-parse_data=function(out,Q) {
+parse_data=function(out,output_item) {
     
     out=lapply(out,function(x){
         x$DATA=lapply(x$DATA,function(y){
@@ -119,7 +119,7 @@ parse_data=function(out,Q) {
     return(out)
 }
 
-parse_untarg_data=function(out,Q) {
+parse_untarg_data=function(out,output_item) {
     
     # split the group column at the pipe to get factors
     m = create_factor_columns(out,'group')
@@ -131,7 +131,7 @@ parse_untarg_data=function(out,Q) {
     return(out)
 }
 
-parse_datatable=function(out,Q) {
+parse_datatable=function(out,output_item) {
     
     # split the group column at the pipe to get factors
     m = create_factor_columns(out,'Class')
@@ -165,4 +165,8 @@ create_factor_columns = function(out,fn) {
     })
     m=data.table::rbindlist(m,fill=TRUE)
     return(m)
+}
+
+parse_do_nothing=function(out,output_item) {
+    return(out)
 }

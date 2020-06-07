@@ -1,6 +1,7 @@
 #' @include generics.R parse_fcns.R
 #' @import methods
 #' @import utils
+#' @import ggplot2
 
 ############################## BASE ##########################################
 mw_base = function(private,locked){
@@ -298,54 +299,44 @@ mw_output_item = function(name,fields,inputs,parse_fcn,match) {
     )
 )
 
-################## query object #######################
+### do_query methods ###
 
 #' @export
-mw_query = function(context,input_item,input_value,output_item,...) {
-    
-    if (is.character(context)) {
-        if (context %in% names(metabolomicsWorkbenchR::context)) {
-            context=metabolomicsWorkbenchR::context[[context]]
-        } else {
-            stop(paste0(context, " is not a valid context."))
+#' @import data.table
+#' @import httr
+#' @importFrom jsonlite fromJSON
+setMethod(f = 'do_query',
+    signature = c('character','character','character','character'),
+    definition = function(context,input_item,input_value,output_item) {
+        
+        if (!(context %in% names(metabolomicsWorkbenchR::context))) {
+            stop(paste0('"',context, '" is not a valid context.'))
         }
-    }
-    
-    if (is.character(input_item)) {
-        if (input_item %in% names(metabolomicsWorkbenchR::input_item)) {
+        if (!(all(input_item %in% names(metabolomicsWorkbenchR::input_item)))) {
+            stop(paste0('An input_item is not valid.'))
+        }
+        if (!(all(output_item %in% names(metabolomicsWorkbenchR::output_item)))) {
+            stop(paste0('An output_item is not valid.'))
+        }
+        
+        # convert to objects
+        context=metabolomicsWorkbenchR::context[[context]]
+        output_item=metabolomicsWorkbenchR::output_item[[output_item]]
+        
+        if (length(input_item)>1) {
+            input_item=as.list(input_item)
+            for (k in 1:length(input_item)) {
+                input_item[[k]]=metabolomicsWorkbenchR::input_item[[input_item]]
+            }
+        } else {
             input_item=metabolomicsWorkbenchR::input_item[[input_item]]
-        } else {
-            stop(paste0(input_item, " is not a valid input_item."))
         }
+        
+        # query the database
+        out=do_query(context,input_item,input_value,output_item)
+        
+        return(out)
     }
-    
-    if (is.character(output_item)) {
-        if (output_item %in% names(metabolomicsWorkbenchR::output_item)) {
-            output_item=metabolomicsWorkbenchR::output_item[[output_item]]
-        } else {
-            stop(paste0(output_item, " is not a valid input_item."))
-        }
-    }
-    
-    out=new('mw_query',
-        context = context,
-        input_item = input_item,
-        input_value = input_value,
-        output_item = output_item,
-        ...
-    )
-    return(out)
-}
-
-.mw_query = setClass(
-    Class = 'mw_query',
-    contains = 'mw_base',
-    slots = c(
-        context = 'mw_context',
-        input_item = 'mw_input_item',
-        input_value = 'character',
-        output_item = 'mw_output_item'
-    )
 )
 
 #' @export
@@ -353,77 +344,105 @@ mw_query = function(context,input_item,input_value,output_item,...) {
 #' @import httr
 #' @importFrom jsonlite fromJSON
 setMethod(f = 'do_query',
-    signature = 'mw_query',
-    definition = function(Q) {
+    signature = c('mw_moverz_context','list','character','character'),
+    definition = function(context,input_item,input_value,output_item) {
         
-        # check the context is valid
-        is_valid(Q$context,Q$input_item$name,Q$input_value,Q$output_item$name)
-        # check the input pattern
-        check_pattern(Q$input_item,Q$input_value,Q$output_item$match)
-        # check the output_item and input_item are compatible
-        check_puts(Q$input_item,Q$output_item)
+        if (length(input_item)!=3) {
+            stop('You must provide 3 input_item for the moverz context.')
+        } 
         
-        # build the url
-        str=paste('https://www.metabolomicsworkbench.org/rest',
-            Q$context@name,
-            Q$input_item$name,
-            paste(Q$input_value,collapse='/',sep=''),
-            paste(Q$output_item$name,collapse=',',sep=''),
-            sep='/')
-        print(str)
+        if (length(input_value)!=3) {
+            stop('You must provide 3 input_value for the moverz context.')
+        } 
         
-        
-        out = httr::GET(
-            url=str
+        # check context
+        context_valid = is_valid(
+            context,
+            c(input_item[[1]]$name,input_item[[2]]$name,input_item[[3]]$name),
+            input_value,
+            output_item
         )
         
         
-        if (out$headers$`content-type`=="application/json") {
-            out=httr::content(out,as='text',encoding = 'UTF-8')
+    }
+)
+
+#' @export
+#' @import data.table
+#' @import httr
+#' @importFrom jsonlite fromJSON
+setMethod(f = 'do_query',
+    signature = c('mw_context','mw_input_item','character','mw_output_item'),
+    definition = function(context,input_item,input_value,output_item) {
+        
+        # check the context is valid
+        is_valid(context,input_item$name,input_value,output_item$name)
+        # check the input pattern
+        check_pattern(input_item,input_value,output_item$match)
+        # check the output_item and input_item are compatible
+        check_puts(input_item,output_item)
+        
+        # build the url
+        str=paste('https://www.metabolomicsworkbench.org/rest',
+            context@name,
+            input_item$name,
+            paste(input_value,collapse='/',sep=''),
+            paste(output_item$name,collapse=',',sep=''),
+            sep='/')
+        print(str)
+        
+        response = httr::GET(
+            url=str
+        )
+        
+        if (response$headers$`content-type`=="image/png") {
+            out = httr::content(response)
+        } else {
+            out=httr::content(response,as='text',encoding = 'UTF-8')
+        }
+        
+        if (out=='[]') {
+            message('There were no results for your query.')
+            return(NULL)
+        }
+        
+        if (response$headers$`content-type`=="application/json") {
+            
+            # parse json
             out=fromJSON(out)
             
-            if (length(out)==0) {
-                message('There were no results for your query.')
-                return(NULL)
-            }
-            
             # reformat the parsed content according to the output_item
-            out = Q$output_item$parse_fcn(out,Q)
+            out = output_item$parse_fcn(out,output_item)
             
-        } else if (out$headers$`content-type`=="application/x-download") {
+        } else if (response$headers$`content-type`=="application/x-download") {
             
-            if ("content-disposition" %in% names(out$headers)) {
-                if (grepl('txt',out$headers$`content-disposition`) | 
-                        grepl('csv',out$headers$`content-disposition`)) {
-                    # try and read
-                    out=httr::content(out,as='text',encoding = 'UTF-8')
+            if ("content-disposition" %in% names(response$headers)) {
+                if (grepl('txt',response$headers$`content-disposition`) | 
+                        grepl('csv',response$headers$`content-disposition`)) {
+                    
+                    # try and read if txt or csv
                     out=read.delim(text=out,sep='\t')
                     
-                    if (length(out)==0) {
-                        message('There were no results for your query.')
-                        return(NULL)
-                    }
+                    out = output_item$parse_fcn(out,output_item)
                     
-                    out = Q$output_item$parse_fcn(out,Q)
+                } else if (grepl('mol',response$headers$`content-disposition`)) {
+                    # a mol file
+                    # just output as text
+                    out = output_item$parse_fcn(out,output_item)
+                    
+                } else {
+                    stop('Unexpected content returned.')
                 }
             }
-        } else if (out$headers$`content-type`=="text/plain; charset=UTF-8") {
+        } else if (response$headers$`content-type`=="text/plain; charset=UTF-8") {
+            
             # datatable
-            out=httr::content(out,as='text',encoding = 'UTF-8')
             out=read.delim(text=out,sep='\t')
+            out = output_item$parse_fcn(out,output_item)
             
-            if (length(out)==0) {
-                message('There were no results for your query.')
-                return(NULL)
-            }
-            
-            out = Q$output_item$parse_fcn(out,Q)
         } else {
             stop('Unexpected mime type')
         }
-        
-        
-        
         
         return(out)
     }
