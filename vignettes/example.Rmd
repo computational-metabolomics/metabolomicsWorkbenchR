@@ -1,0 +1,34 @@
+---
+title: "metabolomicsWorkbenchR"
+author: "Gavin Rhys Lloyd"
+package: metabolomicsWorkbenchR
+output: 
+  BiocStyle::html_document
+vignette: >
+  %\VignetteIndexEntry{metabolomicsWorkbenchR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}  
+---
+
+# Introduction
+Metabolomics Workbench (link) hosts a metabolomics data repository. It contains 
+over 1000 publicly available studies including raw data, processed data and 
+metabolite/compound information.
+
+The repository is searchable using a REST service API. The metabolomicsWorkbenchR
+package makes the endpoints of this service available in R and provides functionality
+to search the database and import datasets and metabolite information into commonly used formats such as 
+data frames and SummarizedExperiment objects.
+
+# Installation
+Its on bioconductor.
+Its also on github.
+
+
+
+
+# References
+
+
+# Session Info
+

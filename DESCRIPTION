@@ -14,11 +14,17 @@ Collate:
     'generics.R'
     'class_def.R'
     'constants.R'
-Imports: data.table,
+Imports: 
+    data.table,
     httr,
     jsonlite,
     methods,
     utils
 Suggests: 
-    testthat,
-    covr
+    biocstyle,
+    covr,
+    knitr,
+    rmarkdown,
+    testthat
+VignetteBuilder: 
+    knitr

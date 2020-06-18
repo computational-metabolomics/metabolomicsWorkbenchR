@@ -1,5 +1,8 @@
 
-parse_data_frame=function(out,output_item) {
+parse_data_frame=function(response,output_item,input_value) {
+    out=httr::content(response,as='text',encoding = 'UTF-8')
+    # parse json
+    out=jsonlite::fromJSON(out)
     
     # force to list of lists in case of length = 1
     if (!is.list(out[[1]])) {
@@ -31,7 +34,10 @@ parse_data_frame=function(out,output_item) {
     return(out)
 }
 
-parse_factors=function(out,output_item) {
+parse_factors=function(response,output_item,input_value) {
+    out=httr::content(response,as='text',encoding = 'UTF-8')
+    # parse json
+    out=jsonlite::fromJSON(out)
     
     # parse output to data.frame
     out_orig = parse_data_frame(out,output_item)
@@ -83,7 +89,11 @@ parse_factors=function(out,output_item) {
     return(OUT)
 }
 
-parse_untarg_factors=function(out,output_item) {
+parse_untarg_factors=function(response,output_item,input_value) {
+    out=httr::content(response,as='text',encoding = 'UTF-8')
+    # parse json
+    out=jsonlite::fromJSON(out)
+    
     df = as.data.frame(unlist(out))
     # remove number
     df$group=trimws(gsub(pattern='^[0-9]+.',replacement='',x=rownames(df)))
@@ -100,7 +110,10 @@ parse_untarg_factors=function(out,output_item) {
     return(df)
 }
 
-parse_data=function(out,output_item) {
+parse_data=function(response,output_item,input_value) {
+    out=httr::content(response,as='text',encoding = 'UTF-8')
+    # parse json
+    out=jsonlite::fromJSON(out)
     
     out=lapply(out,function(x){
         x$DATA=lapply(x$DATA,function(y){
@@ -119,7 +132,9 @@ parse_data=function(out,output_item) {
     return(out)
 }
 
-parse_untarg_data=function(out,output_item) {
+parse_untarg_data=function(response,output_item,input_value) {
+    out=httr::content(response,as='text',encoding = 'UTF-8')
+    out=read.table(text=out,sep='\t',header = TRUE,row.names = 1)
     
     # split the group column at the pipe to get factors
     m = create_factor_columns(out,'group')
@@ -131,7 +146,10 @@ parse_untarg_data=function(out,output_item) {
     return(out)
 }
 
-parse_datatable=function(out,output_item) {
+parse_datatable=function(response,output_item,input_value) {
+    
+    out=httr::content(response,as='text',encoding = 'UTF-8')
+    out=read.delim(text=out,sep='\t',row.names = 1,header = TRUE)
     
     # split the group column at the pipe to get factors
     m = create_factor_columns(out,'Class')
@@ -167,6 +185,53 @@ create_factor_columns = function(out,fn) {
     return(m)
 }
 
-parse_do_nothing=function(out,output_item) {
+parse_do_nothing=function(response,output_item,input_value) {
+    out=httr::content(response)
+    return(out)
+}
+
+parse_moverz=function(response,output_item,input_value) {
+    out=httr::content(response,as='text',encoding = 'UTF-8')
+    
+    if (input_value[[1]]=='MB') {
+        # remove extra column of - - - 
+        out2=gsub(pattern = '\t-\t-\t-\n',replacement = '\n',out)
+        # remove extra column of - - 
+        out2=gsub(pattern = '\t-\t-\n',replacement = '\n',out2)
+        # replace - - - with -
+        out2=gsub(pattern = '\t-\t-\t-\t',replacement = '\t-\t',out2)
+    } else if (input_value[[1]]=='LIPIDS') {
+        # remove extra column 
+        out2=gsub(pattern = '\t\n',replacement = '\n',out)
+        # split merged columns
+        info=gregexpr('[0-9]+\\.[0-9]+\\.[0-9]+',out2)
+        found=regmatches(out2,info)[[1]]
+        replace=unlist(lapply(found,function(x){
+            n=nchar(x)
+            x=paste0(c(substr(x,1,n-5),paste0('0',substr(x,n-4,n))),collapse='\t')
+        }))
+        # for each match
+        for (k in 1:length(found)) {
+            out2=sub(pattern = found[k],replacement = replace[k],x=out2)
+        }
+    } else if (input_value[[1]]=='REFMET'){
+        out2=out
+    }
+    
+    # datatable
+    out=read.delim(text=out2,sep='\t',na.strings = '-')
+    colnames(out)=tolower(colnames(out))
+    colnames(out)=gsub('\\.','_',colnames(out))
+    colnames(out)=gsub('m_z','mz',colnames(out))
+    return(out)
+}
+
+parse_exactmass=function(response,output_item,input_item) {
+    out=httr::content(response,as='text',encoding = 'UTF-8')
+    out2=gsub(pattern = '</br>',replacement = '',out)
+    out2=gsub(pattern = '\n\n\n',replacement = '',out2)
+    out2=gsub(pattern = '\n',replacement = '\t',out2)
+    out=read.delim(text=out2,header=FALSE,sep='\t')
+    colnames(out)=output_item$fields
     return(out)
 }

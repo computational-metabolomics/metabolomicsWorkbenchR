@@ -1,7 +1,6 @@
 #' @include generics.R parse_fcns.R
 #' @import methods
 #' @import utils
-#' @import ggplot2
 
 ############################## BASE ##########################################
 mw_base = function(private,locked){
@@ -161,13 +160,15 @@ setMethod(f = 'is_valid',
         
         input_valid = all(input_item %in% context@input_items)
         
-        length_valid1 = length(input_value[1])==1
-        length_valid2 = length(input_value[2])==1
-        length_valid3 = length(input_value[3])==1
+        length_valid1 = length(input_value[1])==1 # database
+        length_valid2 = length(input_value[2])==1 # mz
+        length_valid3 = length(input_value[3])==1 # ion
+        length_valid4 = length(input_value[4])==1 # tol
         
-        range_valid1 = as.numeric(input_value[1]) >= context@mz_range[1] & input_value[1] <= context@mz_range[2]
-        ion_valid = input_value[2] %in% context@ion_types
-        range_valid3 = as.numeric(input_value[3]) >= context@tol_range[1] & input_value[3] <= context@tol_range[2]
+        range_valid2 = as.numeric(input_value[2]) >= context@mz_range[1] & as.numeric(input_value[2]) <= context@mz_range[2]
+        ion_valid = input_value[3] %in% context@ion_types
+        range_valid4 = as.numeric(input_value[4]) >= context@tol_range[1] & as.numeric(input_value[4]) <= context@tol_range[2]
+        database_valid=input_value[1] %in% c('LIPIDS','MB','REFMET')
         
         err=list()
         if (!input_valid) {
@@ -182,14 +183,20 @@ setMethod(f = 'is_valid',
         if (!length_valid3) {
             err=c(err,"Length of input_value[3] is limited to 1 for this context.\n")
         }
-        if (!range_valid1) {
-            err=c(err,"input_value1 is out of range for this context.\n")
+        if (!length_valid4) {
+            err=c(err,"Length of input_value[4] is limited to 1 for this context.\n")
         }
-        if (!range_valid3) {
-            err=c(err,"input_value3 is out of range for this context.\n")
+        if (!range_valid2) {
+            err=c(err,"input_value[2] is out of range for this context.\n")
+        }
+        if (!range_valid4) {
+            err=c(err,"input_value[4] is out of range for this context.\n")
         }
         if (!ion_valid) {
-            err=c(err,paste0('"',input_value[2], '" is not a valid ion for this context.\n'))
+            err=c(err,paste0('"',input_value[3], '" is not a valid ion for this context.\n'))
+        }
+        if (!database_valid) {
+            err=c(err,paste0('"',input_value[1], '" is not a valid database for this context.\n'))
         }
         if (length(err)>0) {
             stop(err)
@@ -223,8 +230,8 @@ mw_exactmass_context = function(ion_types,lipid_types,...) {
 
 #' @export
 setMethod(f = 'is_valid',
-    signature = c('mw_exactmass_context','missing','character','missing'),
-    definition = function(context,input_value) {
+    signature = c('mw_exactmass_context','character','character','missing'),
+    definition = function(context,input_item,input_value) {
         
         
         length_valid1 = length(input_value[1])==1
@@ -304,7 +311,7 @@ mw_output_item = function(name,fields,inputs,parse_fcn,match) {
 #' @export
 #' @import data.table
 #' @import httr
-#' @importFrom jsonlite fromJSON
+#' @import jsonlite
 setMethod(f = 'do_query',
     signature = c('character','character','character','character'),
     definition = function(context,input_item,input_value,output_item) {
@@ -342,35 +349,224 @@ setMethod(f = 'do_query',
 #' @export
 #' @import data.table
 #' @import httr
-#' @importFrom jsonlite fromJSON
+#' @import jsonlite
 setMethod(f = 'do_query',
-    signature = c('mw_moverz_context','list','character','character'),
+    signature = c('mw_moverz_context','list','character','mw_output_item'),
     definition = function(context,input_item,input_value,output_item) {
         
-        if (length(input_item)!=3) {
-            stop('You must provide 3 input_item for the moverz context.')
+        
+        if (length(input_item)!=4) {
+            stop('You must provide 4 input_item for the moverz context.')
         } 
         
-        if (length(input_value)!=3) {
-            stop('You must provide 3 input_value for the moverz context.')
+        if (length(input_value)!=4) {
+            stop('You must provide 4 input_value for the moverz context.')
         } 
+        
+        # get input list as strings
+        namez = lapply(input_item,function(x) {
+            if (is(x,'mw_input_item')) {
+                x=x$name
+                return(x)
+            } else if (is(x,'character')) {
+                return(x)
+            } else {
+                stop('input_item list must only contain characters or mw_input_item objects.')
+            }
+        })
+        namez=unlist(namez)
+        
+        # check namez
+        if (namez[1]!='database') {
+            stop('input_item[1] must be "database"')
+        }
+        if (namez[2]!='mz') {
+            stop('input_item[2] must be "mz"')
+        }
+        if (namez[3]!='ion') {
+            stop('input_item[3] must be "ion"')
+        }
+        if (namez[4]!='tolerance') {
+            stop('input_item[4] must be "tolerance"')
+        }
         
         # check context
         context_valid = is_valid(
             context,
-            c(input_item[[1]]$name,input_item[[2]]$name,input_item[[3]]$name),
-            input_value,
-            output_item
+            namez,
+            input_value
         )
         
+        # build the url
+        str=paste('https://www.metabolomicsworkbench.org/rest',
+            context@name,
+            paste(input_value,collapse='/',sep=''),
+            sep='/')
+
+        out = use_api(str,output_item,input_value)
+        
+        return(out)
         
     }
 )
 
 #' @export
+setMethod(f = 'do_query',
+    signature = c('mw_moverz_context','list','character','character'),
+    definition = function(context,input_item,input_value,output_item) {
+        if (output_item != 'moverz'){
+            warning('output_item changed to "moverz"')
+        }
+        output_item=metabolomicsWorkbenchR::output_item$moverz
+        out = do_query(context,input_item,input_value,output_item)
+        return(out)
+    }
+)
+
+#' @export
+setMethod(f = 'do_query',
+    signature = c('mw_moverz_context','list','character','missing'),
+    definition = function(context,input_item,input_value,output_item) {
+        output_item=metabolomicsWorkbenchR::output_item$moverz
+        out = do_query(context,input_item,input_value,output_item)
+        return(out)
+    }
+)
+
+#' @export
+setMethod(f = 'do_query',
+    signature = c('mw_moverz_context','character','character','missing'),
+    definition = function(context,input_item,input_value,output_item) {
+        output_item=metabolomicsWorkbenchR::output_item$moverz
+        input_item=metabolomicsWorkbenchR::input_item$moverz
+        out = do_query(context,input_item,input_value,output_item)
+        return(out)
+    }
+)
+
+#' @export
+setMethod(f = 'do_query',
+    signature = c('character','character','character','missing'),
+    definition = function(context,input_item,input_value,output_item) {
+        if (context!='moverz') {
+            stop('output_item must be specific if not a "moverz" context')
+        }
+        context=metabolomicsWorkbenchR::context[[context]]
+        out = do_query(context,input_item,input_value)
+        return(out)
+    }
+)
+
+
 #' @import data.table
 #' @import httr
-#' @importFrom jsonlite fromJSON
+#' @import jsonlite
+setMethod(f = 'do_query',
+    signature = c('mw_exactmass_context','list','character','mw_output_item'),
+    definition = function(context,input_item,input_value,output_item) {
+        
+        
+        if (length(input_item)!=2) {
+            stop('You must provide 2 input_item for the exactmass context.')
+        } 
+        
+        if (length(input_value)!=2) {
+            stop('You must provide 2 input_value for the exactmass context.')
+        } 
+        
+        # get input list as strings
+        namez = lapply(input_item,function(x) {
+            if (is(x,'mw_input_item')) {
+                x=x$name
+                return(x)
+            } else if (is(x,'character')) {
+                return(x)
+            } else {
+                stop('input_item list must only contain characters or mw_input_item objects.')
+            }
+        })
+        namez=unlist(namez)
+        
+        # check namez
+        if (namez[1]!='lipid') {
+            stop('input_item[1] must be "lipid"')
+        }
+        if (namez[2]!='ion') {
+            stop('input_item[2] must be "ion"')
+        }
+        
+        # check context
+        context_valid = is_valid(
+            context,
+            namez,
+            input_value
+        )
+        
+        # build the url
+        str=paste('https://www.metabolomicsworkbench.org/rest',
+            context@name,
+            paste(input_value,collapse='/',sep=''),
+            sep='/')
+
+        out = use_api(str,output_item,input_value)
+        
+        return(out)
+        
+    }
+)
+
+#' @export
+setMethod(f = 'do_query',
+    signature = c('mw_exactmass_context','list','character','character'),
+    definition = function(context,input_item,input_value,output_item) {
+        if (output_item != 'exactmass'){
+            warning('output_item changed to "exactmass"')
+        }
+        output_item=metabolomicsWorkbenchR::output_item$exactmass
+        out = do_query(context,input_item,input_value,output_item)
+        return(out)
+    }
+)
+
+#' @export
+setMethod(f = 'do_query',
+    signature = c('mw_exactmass_context','list','character','missing'),
+    definition = function(context,input_item,input_value,output_item) {
+        output_item=metabolomicsWorkbenchR::output_item$exactmass
+        out = do_query(context,input_item,input_value,output_item)
+        return(out)
+    }
+)
+
+#' @export
+setMethod(f = 'do_query',
+    signature = c('mw_exactmass_context','character','character','missing'),
+    definition = function(context,input_item,input_value,output_item) {
+        output_item=metabolomicsWorkbenchR::output_item$exactmass
+        input_item=metabolomicsWorkbenchR::input_item$exactmass
+        out = do_query(context,input_item,input_value,output_item)
+        return(out)
+    }
+)
+
+#' @export
+setMethod(f = 'do_query',
+    signature = c('character','character','character','missing'),
+    definition = function(context,input_item,input_value,output_item) {
+        if (!(context %in% c('moverz','exactmass'))) {
+            stop('output_item must be specified for this context')
+        }
+        context=metabolomicsWorkbenchR::context[[context]]
+        out = do_query(context,input_item,input_value)
+        return(out)
+    }
+)
+
+
+#' @export
+#' @import data.table
+#' @import httr
+#' @import jsonlite
 setMethod(f = 'do_query',
     signature = c('mw_context','mw_input_item','character','mw_output_item'),
     definition = function(context,input_item,input_value,output_item) {
@@ -389,60 +585,8 @@ setMethod(f = 'do_query',
             paste(input_value,collapse='/',sep=''),
             paste(output_item$name,collapse=',',sep=''),
             sep='/')
-        print(str)
         
-        response = httr::GET(
-            url=str
-        )
-        
-        if (response$headers$`content-type`=="image/png") {
-            out = httr::content(response)
-        } else {
-            out=httr::content(response,as='text',encoding = 'UTF-8')
-        }
-        
-        if (out=='[]') {
-            message('There were no results for your query.')
-            return(NULL)
-        }
-        
-        if (response$headers$`content-type`=="application/json") {
-            
-            # parse json
-            out=fromJSON(out)
-            
-            # reformat the parsed content according to the output_item
-            out = output_item$parse_fcn(out,output_item)
-            
-        } else if (response$headers$`content-type`=="application/x-download") {
-            
-            if ("content-disposition" %in% names(response$headers)) {
-                if (grepl('txt',response$headers$`content-disposition`) | 
-                        grepl('csv',response$headers$`content-disposition`)) {
-                    
-                    # try and read if txt or csv
-                    out=read.delim(text=out,sep='\t')
-                    
-                    out = output_item$parse_fcn(out,output_item)
-                    
-                } else if (grepl('mol',response$headers$`content-disposition`)) {
-                    # a mol file
-                    # just output as text
-                    out = output_item$parse_fcn(out,output_item)
-                    
-                } else {
-                    stop('Unexpected content returned.')
-                }
-            }
-        } else if (response$headers$`content-type`=="text/plain; charset=UTF-8") {
-            
-            # datatable
-            out=read.delim(text=out,sep='\t')
-            out = output_item$parse_fcn(out,output_item)
-            
-        } else {
-            stop('Unexpected mime type')
-        }
+        out = use_api(str,output_item,input_value)
         
         return(out)
     }
@@ -472,3 +616,25 @@ setMethod(f = 'check_puts',
         }
     }
 )
+
+use_api = function(str,output_item=NULL,input_value=NULL) {
+    print(str)
+    response = httr::GET(
+        url=str
+    )
+    
+    print(response$headers$`content-type`)
+    
+    if (response$headers$`content-type`=="image/png") {
+        # do nothing
+    } else {
+        out=httr::content(response,as='text',encoding = 'UTF-8')
+        if (out=='[]') {
+            message('There were no results for your query.')
+            return(NULL)
+        }
+    }
+    out = output_item$parse_fcn(response,output_item,input_value)
+    
+    return(out)
+}

@@ -1,4 +1,4 @@
-#' @include generics.R class_def.R
+#' @include generics.R class_def.R parse_fcns.R
 
 #' @export
 output_item = list()
@@ -48,7 +48,7 @@ context$protein = mw_context(
 )
 
 context$moverz = mw_moverz_context(
-    input_items = c('LIPIDS','MB','REFMET'),
+    input_items = c('database','mz','ion','tolerance'),
     mz_range = c(50,2000),
     tol_range = c(0.0001,1),
     ion_types = c('M+H','M+H-H2O','M+2H','M+3H','M+4H','M+K',
@@ -516,4 +516,74 @@ output_item$refmet_exact=mw_output_item(
     match='exact',
     parse_fcn=parse_data_frame
 )
+
+###### moverz
+input_item$database = mw_input_item(
+    name = 'database',
+    pattern = list(
+        exact = '^((LIPIDS)|(REFMET)|(MB))$',
+        partial = '^((LIPIDS)|(REFMET)|(MB))$'
+        )
+)
+input_item$mz = mw_input_item(
+    name = 'mz',
+    pattern = list(
+        exact = '^[0-9]\\d*(\\.\\d+)?$',
+        partial = '^[0-9]\\d*(\\.\\d+)?$'
+    )
+)
+input_item$ion = mw_input_item(
+    name = 'ion',
+    pattern = list(
+        exact = '*',
+        partial = '*'
+    )
+)
+input_item$tolerance = mw_input_item(
+    name = 'tolerance',
+    pattern = list(
+        exact = '^[0-9]\\d*(\\.\\d+)?$',
+        partial = '^[0-9]\\d*(\\.\\d+)?$'
+    )
+)
+input_item$moverz=list(
+    input_item$database,
+    input_item$mz,
+    input_item$ion,
+    input_item$tolerance
+)
+output_item$moverz=mw_output_item(
+    name='moverz',
+    fields=c("input_mz","matched_mz","delta","name","systematic_name","formula",
+        "ion","category","main_class","sub_class"),
+    inputs=c('database','mz','ion','tolerance'),
+    match='exact',
+    parse_fcn=parse_moverz
+)
+
+###### exactmass
+
+input_item$lipid = mw_input_item(
+    name = 'lipid',
+    pattern = list(
+        exact = '*',
+        partial = '*'
+    )
+)
+
+input_item$exactmass=list(
+    input_item$lipid,
+    input_item$ion
+)
+
+output_item$exactmass=mw_output_item(
+    name='exactmass',
+    fields=c("input_abbrev", "input_ion_type", "exact_mass", "molecular_formula"),
+    inputs=c('lipid','ion'),
+    match='exact',
+    parse_fcn=parse_exactmass
+)
+
+
+
 
