@@ -1,11 +1,50 @@
+#' Output items
+#'
+#' A predefined list of mw_output_item objects. The items have been created to
+#' mirror the Metabolomics Workbench API documentation output items as closely 
+#' as possible.
+#' @examples
+#' # list available output_items
+#' names(output_item)
+#' 
+#' # get the output item 'summary'
+#' output_item$summary
+#' 
+#' @rdname output_item
 #' @include generics.R class_def.R parse_fcns.R
-
+#'
 #' @export
 output_item = list()
 
+#' Input items
+#'
+#' A predefined list of mw_input_item objects. The items have been created to
+#' mirror the Metabolomics Workbench API documentation input items as closely 
+#' as possible.
+#' @examples
+#' # list available input_items
+#' names(input_item)
+#' 
+#' # get the input item 'study_id'
+#' input_item$study_id
+#' 
+#' @rdname input_item
 #' @export
 input_item = list()
 
+#' Contexts
+#'
+#' A predefined list of mw_context objects. The context have been created to
+#' mirror the metabolomics workbench API documentation contexts as closely 
+#' as possible.
+#' @examples
+#' # list available contexts
+#' names(context)
+#' 
+#' # get the context 'study'
+#' context$study
+#' 
+#' @rdname context
 #' @export
 context = list()
 
@@ -14,37 +53,35 @@ context = list()
 context$study = mw_context(
     name = 'study',
     input_items = c('study_id','study_title','institute','last_name','analysis_id','metabolite_id'),
-    output_items = c('summary','factors','analysis','metabolites','mwtab','source','species','disease','number_of_metabolites','data','datatable','untarg_studies','untarg_factors','untarg_data','metabolite_info'),
-    allow = 'one'
+    output_items = c('summary','factors','analysis','metabolites','mwtab',
+        'source','species','disease','number_of_metabolites','data','datatable',
+        'untarg_studies','untarg_factors','untarg_data','metabolite_info',
+        'SummarizedExperiment')
 )
 
 context$compound = mw_context(
     name = 'compound',
     input_items = c('regno','formula','inchi_key','lm_id','pubchem_cid','hmdb_id','kegg_id','chebi_id','metacyc_id','abbrev'),
-    output_items = c('all','classification','molfile','png','compound_exact'),
-    allow = 'any'
+    output_items = c('all','classification','molfile','png','compound_exact')
 )    
 
 context$refmet = mw_context(
     name = 'refmet',
     input_items = c('match','name','inchi_key','pubchem_cid','formula','main_class','sub_class','super_class'),
-    output_items = c('all','ignored','refmet_exact'),
-    allow = 'any'
+    output_items = c('all','ignored','refmet_exact')
 )
 
 context$gene = mw_context(
     name = 'gene',
     input_items = c('mgp_id','gene_id','gene_name','gene_symbol','taxid'),
-    output_items = c('all','gene_exact','gene_partial'),
-    allow = 'any'
+    output_items = c('all','gene_exact','gene_partial')
 )
 
 context$protein = mw_context(
     name = 'protein',
     input_items = c('mgp_id','gene_id','gene_name','gene_symbol','taxid','mrna_id','refseq_id',
         'protein_gi','uniprot_id','protein_entry','protein_name'),
-    output_items = c('all','protein_exact','protein_partial'),
-    allow = 'any'
+    output_items = c('all','protein_exact','protein_partial')
 )
 
 context$moverz = mw_moverz_context(
@@ -72,43 +109,50 @@ input_item$study_id = mw_input_item(
     name = 'study_id',
     pattern = list(
         exact='^ST[0-9]{6}$',
-        partial='^S(T[0-9]{0,6})?$')
+        partial='^S(T[0-9]{0,6})?$'),
+    example=c('ST000001','ST')
 )
 input_item$analysis_id = mw_input_item(
     name = 'analysis_id',
     pattern = list(
         exact='^AN[0-9]{6}$',
-        partial='^A(N[0-9]{0,6})?$')
+        partial='^A(N[0-9]{0,6})?$'),
+    example=c('AN000021','AN')
 )
 input_item$metabolite_id = mw_input_item(
     name = 'metabolite_id',
     pattern = list(
         exact='^ME[0-9]{6}$',
-        partial='^M(E[0-9]{0,6})?$')
+        partial='^M(E[0-9]{0,6})?$'),
+    example=c('ME000001','ME')
 )
 input_item$study_title = mw_input_item(
     name = 'study_title',
     pattern = list(
         exact='*',
-        partial='*')
+        partial='*'),
+    example=c('Diabetes')
 )
 input_item$institute = mw_input_item(
     name = 'institute',
     pattern = list(
         exact='*',
-        partial='*')
+        partial='*'),
+    example=c('University')
 )
 input_item$last_name = mw_input_item(
     name = 'last_name',
     pattern = list(
         exact='*',
-        partial='*')
+        partial='*'),
+    example=c('Kind')
 )
 input_item$ignored = mw_input_item(
     name = 'study_id',
     pattern = list(
         exact='*',
-        partial='*')
+        partial='*'),
+    example='This is a special input item that is ignored for certain contexts and output items.'
 )
 output_item$metabolite_info=mw_output_item(
     name='summary',
@@ -236,6 +280,21 @@ output_item$datatable=mw_output_item(
     parse_fcn=parse_datatable
 )
 
+output_item$SummarizedExperiment=mw_SE_item(
+    name='SummarizedExperiment',
+    fields='',
+    inputs=c('study_id','analysis_id'),
+    match='exact',
+    parse_fcn=function(response,output_item,input_value){}
+)
+
+output_item$untarg_SummarizedExperiment=mw_untarg_SE_item(
+    name='SummarizedExperiment',
+    fields='',
+    inputs=c('analysis_id'),
+    match='exact',
+    parse_fcn=function(response,output_item,input_value){}
+)
 
 ###################### COMPOUND CONTEXT #####################################
 input_item$regno = mw_input_item(

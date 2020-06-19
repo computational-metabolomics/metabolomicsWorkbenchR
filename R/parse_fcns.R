@@ -35,15 +35,12 @@ parse_data_frame=function(response,output_item,input_value) {
 }
 
 parse_factors=function(response,output_item,input_value) {
-    out=httr::content(response,as='text',encoding = 'UTF-8')
-    # parse json
-    out=jsonlite::fromJSON(out)
-    
+
     # parse output to data.frame
-    out_orig = parse_data_frame(out,output_item)
+    out_orig = parse_data_frame(response,output_item,input_value)
     
     # create a list with factors for each sample_id
-    u = unioutput_itemue(out_orig$study_id)
+    u = unique(out_orig$study_id)
     OUT=list()
     
     for (id in u) {
@@ -53,14 +50,14 @@ parse_factors=function(response,output_item,input_value) {
         # expand factors
         m=as.data.frame(matrix(NA,nrow=nrow(out),ncol=20)) # assume no more than 20 factors for a study
         
-        for (k in seoutput_item(from=1,to=nrow(out))) {
+        for (k in seq(from=1,to=nrow(out))) {
             
             x=out$factors[k]
             
             # generate a data.frame from the factors by splitting at the pipes
             at_pipe=strsplit(x,'|',fixed=TRUE)[[1]]
             
-            for (j in seoutput_item(from=1, to=length(at_pipe))) {
+            for (j in seq(from=1, to=length(at_pipe))) {
                 # split each factor at colon
                 at_colon=strsplit(at_pipe[[j]],':',fixed=TRUE)[[1]]
                 
@@ -74,7 +71,7 @@ parse_factors=function(response,output_item,input_value) {
             }
         }
         
-        m=m[,seoutput_item(from=1,to=length(at_pipe)),drop=FALSE] # set strings to factors
+        m=m[,seq(from=1,to=length(at_pipe)),drop=FALSE] # set strings to factors
         
         m=as.data.frame(lapply(m,factor))
         
@@ -129,12 +126,22 @@ parse_data=function(response,output_item,input_value) {
     colnames(out)=gsub('DATA.','',colnames(out),fixed=TRUE)
     # convert to numeric
     out[,8:ncol(out)]=lapply(out[,8:ncol(out)],as.numeric)
-    return(out)
+    
+    # check for multiple analysis_id
+    u=unique(out$analysis_id)
+    
+    # split by analysis_id
+    out2=list()
+    for (k in u) {
+        out2[[k]]=out[out$analysis_id==k,]
+    }
+    
+    return(out2)
 }
 
 parse_untarg_data=function(response,output_item,input_value) {
     out=httr::content(response,as='text',encoding = 'UTF-8')
-    out=read.table(text=out,sep='\t',header = TRUE,row.names = 1)
+    out=read.table(text=out,sep='\t',header = TRUE,row.names = 1,check.names = FALSE)
     
     # split the group column at the pipe to get factors
     m = create_factor_columns(out,'group')
@@ -143,13 +150,15 @@ parse_untarg_data=function(response,output_item,input_value) {
     w=which(colnames(out)=='group')
     # exclude group
     out=cbind(out[1:(w-1)],m,out[(w+1):ncol(out)])
+    
+    out$group=NULL
     return(out)
 }
 
 parse_datatable=function(response,output_item,input_value) {
     
     out=httr::content(response,as='text',encoding = 'UTF-8')
-    out=read.delim(text=out,sep='\t',row.names = 1,header = TRUE)
+    out=read.delim(text=out,sep='\t',row.names = 1,header = TRUE,check.names = FALSE)
     
     # split the group column at the pipe to get factors
     m = create_factor_columns(out,'Class')
@@ -158,6 +167,9 @@ parse_datatable=function(response,output_item,input_value) {
     w=which(colnames(out)=='Class')
     # exclude group
     out=cbind(out[1:(w-1)],m,out[(w+1):ncol(out)])
+    out$Class=NULL
+    attributes(out)=c(attributes(out),list('number_of_factors'=ncol(m)))
+    
     return(out)
 }
 

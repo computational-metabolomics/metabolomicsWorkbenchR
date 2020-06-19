@@ -1,0 +1,229 @@
+---
+title: "Introduction_to_metabolomicsWorkbenchR"
+author:
+- name: Gavin R Lloyd
+  affiliation: Phenome Centre Birmingham, University of Birmingham, UK
+  email: g.r.lloyd@bham.ac.uk
+- name: Ralf J Weber
+  affiliation: Phenome Centre Birmingham, University of Birmingham, UK
+  email: r.j.weber@bham.ac.uk
+output:
+  BiocStyle::html_document:
+    toc: yes
+    toc_depth: 2
+    number_sections: yes
+    toc_float: yes
+package: metabolomicsWorkbenchR
+vignette: >
+  %\VignetteIndexEntry{Introduction_to_metabolomicsWorkbenchR} 
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r echo = FALSE,include=FALSE}
+suppressPackageStartupMessages(library(metabolomicsWorkbenchR))
+```
+
+
+# Introduction
+Metabolomics Workbench [(link)](www.metabolomicsworkbench.org) hosts a metabolomics 
+data repository. It contains over 1000 publicly available studies including raw data, 
+processed data and metabolite/compound information.
+
+The repository is searchable using a REST service API. The metabolomicsWorkbenchR
+package makes the endpoints of this service available in R and provides functionality
+to search the database and import datasets and metabolite information into commonly used 
+formats such as data frames and SummarizedExperiment objects.
+
+# Installation
+To install this package enter:
+```
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("metabolomicsWorkbenchR")
+```
+For older versions, please refer to the appropriate Bioconductor release.
+
+# Running a query
+The Metabolomics Workbench API has a number of endpoints that can be used to 
+query several different databases. Complete details are provided in the API
+documentation [(link)](https://www.metabolomicsworkbench.org/tools/MWRestAPIv1.0.pdf).
+
+`metabolomicsWorkbenchR` provides a simple interface to all API endpoints via 
+the `do_query` method. Four inputs are required:
+
+* `context` -  The context determines the type of data to be accessed from the Metabolomics Workbench,
+such as metadata or results related to the submitted studies, data from metabolites, genes/proteins and
+analytical chemistry databases as well as other services related to mass spectrometry and metabolite
+identification. Valid contexts are "study", "compound", "refmet", 
+"gene", "protein", "moverz" and "exactmass".
+* `input_item` - Input items direct the search towards a specific part of the database. 
+If the database is a table, then `input_item` is a column in that table that will be searched for matching values.
+* `input_value` - The value to search for in the named `input_item`.
+* `output_item` - The type of output to be returned. Usually some data in the form of a table, but sometimes a file (e.g. png, mol).
+
+By combining different context, input and output items a variety of information can be returned. In this first example, we query the study context for study titles containing the keyword "Diabetes" and request a summary of each matching study.
+
+```{r}
+# search for all studies with "Diabetes" in the title and return a summary
+df = do_query(
+    context = 'study',
+    input_item = 'study_title',
+    input_value = 'Diabetes',
+    output_item = 'summary'
+)
+df[1:3,c(1,4)]
+```
+The result is a 14x12 data.frame with study titles, authors, descriptions etc.
+
+In the next example we query the compound context for "regno" identifier 11 and request all available information for the matching compound.
+
+```{r}
+df = do_query(
+    context = 'compound',
+    input_item = 'regno',
+    input_value = '11',
+    output_item = 'compound_exact'
+)
+
+df[,1:3]
+```
+
+Valid contexts, input items and output items can be listed using the `names` function:
+
+```{r}
+# valid contexts
+names(context) # context, input_item or output_item
+```
+
+Valid inputs and outputs for a context can be displayed by accessing the list of context objects. Valid inputs for a particular output can also be displayed by accessing the list of output item objects. Use of `metabolmicsWorkbenchR` objects is detailed in a later section.
+
+More information about the different contexts can be found in the API documentation
+[(link)](https://www.metabolomicsworkbench.org/tools/MWRestAPIv1.0.pdf)
+
+# Special cases
+`metabolomicsWorkBenchR` includes some output items in addition to those specified by the API documentation. These special cases are described here.
+
+## `input_item` "ignored"
+The input item is used with the "study" context and the "untarg_studies" input_item. The API ignores the input_item and the input_value when using this query and returns a list of studies with untargeted data.
+
+```{r}
+df = do_query(
+  context = 'study',
+  input_item = 'ignored',
+  input_value = 'ignored',
+  output_item = 'untarg_studies'
+)
+
+df[1:3,1:3]
+```
+
+## `output_item` "compound_exact", "protein_exact" and "gene_exact"
+These outputs refer to compound, protein and gene context API outputs that can be used with exact matching. This means that only exact matches to the input_value will be returned. For these outputs all available output fields will be returned.
+
+```{r}
+df = do_query(
+  context = 'compound',
+  input_item = 'regno',
+  input_value = '11',
+  output_item = 'compound_exact'
+)
+
+df[,1:3]
+```
+
+## `output_item` "protein_partial" and "gene_partial"
+These outputs refer to protein and gene contexts API outputs that can be used with partial matching. This means that all records with a partial match to the input_value will be returned. For these outputs all available output fields will be returned.
+
+```{r}
+df = do_query(
+  context = 'gene',
+  input_item = 'gene_name',
+  input_value = 'acetyl-CoA',
+  output_item = 'gene_partial'
+)
+
+df[1:3,1:3]
+```
+
+## `output_item` "SummarizedExperiment"
+This output refers to the study context and uses multiple queries to return a SummarizedExperiment object for a study_id or analysis_id.
+
+```{r}
+SE = do_query(
+    context = 'study',
+    input_item = 'study_id',
+    input_value = 'ST000001',
+    output_item = 'SummarizedExperiment'
+)
+
+SE
+```
+
+## `output_item` "untarg_SummarizedExperiment"
+This output refers to the study context and uses multiple queries to return a SummarizedExperiment object of untargeted data for a study_id or analysis_id.
+
+```{r}
+SE = do_query(
+    context = 'study',
+    input_item = 'analysis_id',
+    input_value = 'AN000023',
+    output_item = 'untarg_SummarizedExperiment'
+)
+
+SE
+```
+
+
+# S4 classes
+A number of classes have been defined in this package and for completeness they are described below. They are used to
+implement access to the API endpoints and it is not expected that they will be used as objects by the user. The `do_query` function uses character strings to access predefined instances of these objects and simplify the query.
+
+## Contexts
+Each database is referred to as a 'context'. These contexts can be searched using
+input/output pairs to search the database for matches and return the results.
+
+In `metabolmicsWorkbenchR` a predefined list called `context` contains 
+`mw_context` objects. These objects define which inputs and outputs are valid
+options for a context.
+
+The name of all valid contexts can be displayed:
+
+```{r}
+# list all context names
+names(context)
+```
+
+Information about a specific context can be obtained using the show method for a
+an `mw_context` object:
+
+```{r}
+# list valid inputs/outputs for the "study" context
+context$study
+```
+## Input / Output Items
+Once the context of the search has been decided upon valid inputs and outputs can 
+be chosen. All input and output items have been predefined as lists called 
+`input_item` and `output_item`.
+
+The `input_item` list contains `mw_input_item` objects that specify valid pattern
+matching of the input value using regex.
+
+```{r}
+# input item "study_id" info
+input_item$study_id
+```
+
+The `output_item` list contains `mw_output_item` objects that specify valid inputs,
+the expected return fields (if the return is a data.frame) and the type of input matching that is supported.
+
+```{r}
+# output item 'summary' info
+output_item$summary
+```
+
+# Session Info
+```{r,echo=FALSE}
+sessionInfo()
+```

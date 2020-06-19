@@ -19,6 +19,20 @@ mw_base = function(private,locked){
     )
 )
 
+#' Get slot value from mw_base objects
+#' 
+#' Gets the value of a slot from mw_base objects, provided they are not listed as
+#' 'private'.
+#' @param x An object derived from mw_base.
+#' @param name The name of the slot to access.
+#' @return The assigned to the slot.
+#' @examples
+#' # an object derived from mw_base object
+#' C = context$study
+#' # access the name slot
+#' C$name
+#' @rdname mw_base
+#' @export
 setMethod(f = "$",
     signature = c("mw_base"),
     definition = function(x,name) {
@@ -39,41 +53,15 @@ setMethod(f = "$",
     }
 )
 
-setMethod(f = "$<-",
-    signature = c("mw_base"),
-    definition = function(x,name,value) {
-        
-        is_slot = name %in% slotNames(x)
-        is_private = name %in% c(x@private,'private')
-        is_locked = name %in% c(x@locked,'private','locked')
-        
-        if (is_slot & !is_private & !is_locked) {
-            slot(x,name) = value
-            return(x)
-        } else {
-            if (!is_slot) {
-                stop(paste0('"',name,'" is not a valid slot for objects of class "', class(x)[1],'"'))
-            }
-            if (is_private) {
-                stop(paste0('"',name,'" is a private slot for internal use only.'))
-            }
-            if (is_locked) {
-                stop(paste0('"',name,'" is a read-only slot.'))
-            }
-        }
-    }
-)
-
 
 ############################## CONTEXTS ######################################
 
-mw_context = function(name,input_items,output_items,allow,...) {
+mw_context = function(name,input_items,output_items,...) {
     out = new('mw_context',
         name = name,
         input_items = input_items,
         output_items = output_items,
-        allow = allow,
-        locked = c('name','input_items','allow','output_items'),
+        locked = c('name','input_items','output_items'),
         ...
     )    
     return(out)
@@ -85,11 +73,25 @@ mw_context = function(name,input_items,output_items,allow,...) {
     slots = c(
         name = 'character',
         input_items = 'character',
-        output_items = 'character',
-        allow = 'character'
+        output_items = 'character'
     )
 )
 
+
+setMethod(f = 'show',
+    signature = 'mw_context',
+    definition = function(object) {
+        cat('A Metabolomics Workbench "context"\n\n')
+        cat('Name:\t"',object@name,'"\n\n',sep='')
+        cat('Valid input_item names:\n')
+        cat(paste0('\t"',object@input_items,'"',collapse='\n'),'\n\n',sep='')
+        cat('Valid output_item names:\n')
+        cat(paste0('\t"',object@output_items,'"',collapse='\n'),'\n\n',sep='')
+    }
+)
+
+
+#' @rdname is_valid
 #' @export
 setMethod(f = 'is_valid',
     signature = c('mw_context','character','character','character'),
@@ -98,8 +100,8 @@ setMethod(f = 'is_valid',
         name_valid = context@name %in% c('study','compound','refmet','gene','protein','moverz','exactmass')
         input_valid = all(input_item %in% context@input_items)
         output_valid = all(output_item %in% context@output_items)
-        length_valid = !(length(input_value)>1)
-        length_out_valid = !(length(output_item)>1 & context@allow=='one')
+        length_valid = (length(input_value)==length(input_item))
+        length_out_valid = !(length(input_item)>1)
         
         err=list()
         if (!name_valid) {
@@ -114,10 +116,10 @@ setMethod(f = 'is_valid',
         }
         
         if (!length_valid) {
-            err=c(err,"Length of input_value is limited to 1 for this context.\n")
+            err=c(err,"Length of input_value must be the same as length of input_item.\n")
         }
         if (!length_out_valid) {
-            err=c(err,"Length of output_item is limited to 1 for this context.\n")
+            err=c(err,"Length of intput_item is limited to 1 for this context.\n")
         }
         
         if (length(err)>0) {
@@ -132,12 +134,11 @@ mw_moverz_context = function(input_items,ion_types,tol_range,mz_range,...) {
     out = new('mw_moverz_context',
         name = 'moverz',
         input_items = input_items,
-        output_items = '',
-        allow = '',
+        output_items = 'moverz',
         ion_types = ion_types,
         tol_range = tol_range,
         mz_range = mz_range,
-        locked = c('name','input_items','allow','output_items','ion_types','tol_range','mz_range'),
+        locked = c('name','input_items','output_items','ion_types','tol_range','mz_range'),
         ...
     )    
     return(out)
@@ -153,6 +154,8 @@ mw_moverz_context = function(input_items,ion_types,tol_range,mz_range,...) {
     )
 )
 
+
+#' @rdname is_valid
 #' @export
 setMethod(f = 'is_valid',
     signature = c('mw_moverz_context','character','character','missing'),
@@ -208,12 +211,11 @@ setMethod(f = 'is_valid',
 mw_exactmass_context = function(ion_types,lipid_types,...) {
     out = new('mw_exactmass_context',
         name = 'exactmass',
-        input_items = '',
-        output_items = '',
-        allow = '',
+        input_items = c('lipid','ion'),
+        output_items = 'exactmass',
         ion_types = ion_types,
         lipid_types = lipid_types,
-        locked = c('name','input_items','allow','output_items','ion_types','lipid_types'),
+        locked = c('name','input_items','output_items','ion_types','lipid_types'),
         ...
     )    
     return(out)
@@ -228,6 +230,9 @@ mw_exactmass_context = function(ion_types,lipid_types,...) {
     )
 )
 
+
+
+#' @rdname is_valid
 #' @export
 setMethod(f = 'is_valid',
     signature = c('mw_exactmass_context','character','character','missing'),
@@ -266,10 +271,11 @@ setMethod(f = 'is_valid',
 
 ################# INPUT ITEMS ####################
 
-mw_input_item = function(name,pattern) {
+mw_input_item = function(name,pattern,example='',...) {
     out = new('mw_input_item',
         name = name,
         pattern = pattern,
+        example = example,
         locked = c('name','pattern')
     )
 }
@@ -278,8 +284,26 @@ mw_input_item = function(name,pattern) {
     Class = 'mw_input_item',
     contains = 'mw_base',
     slots = c(name = 'character',
-        pattern = 'list'
+        pattern = 'list',
+        example = 'character'
     )
+)
+
+setMethod(f = 'show',
+    signature = 'mw_input_item',
+    definition = function(object) {
+        cat('A Metabolomics Workbench "input_item"\n\n')
+        cat('Name:\t"',object@name,'"\n\n',sep='')
+        cat('Exact pattern matching:\n')
+        cat(paste0('\t"',object@pattern$exact,'"',collapse='\n'),'\n\n',sep='')
+        cat('Partial pattern matching:\n')
+        cat(paste0('\t"',object@pattern$partial,'"',collapse='\n'),'\n\n',sep='')
+        
+        if (any(object$example != '')) {
+            cat('Examples: \n')
+            cat(paste0('\t"',object@example,'"',collapse='\n'),'\n\n',sep='')
+        }
+    }
 )
 
 ############### OUTPUT ITEMS #####################
@@ -306,16 +330,35 @@ mw_output_item = function(name,fields,inputs,parse_fcn,match) {
     )
 )
 
+setMethod(f = 'show',
+    signature = 'mw_output_item',
+    definition = function(object) {
+        cat('A Metabolomics Workbench "output_item"\n\n')
+        cat('Name:\t"',object@name,'"\n\n',sep='')
+        cat('Returns:\n')
+        cat(paste0('\t"',object@fields,'"',collapse='\n'),'\n\n',sep='')
+        cat('Allowed input_item names:\n')
+        cat(paste0('\t"',object@inputs,'"',collapse='\n'),'\n\n',sep='')
+        cat('Type of matching supported:')
+        cat(paste0('\t"',object@match,'"',collapse='\n'),'\n\n',sep='')
+    }
+)
+
 ### do_query methods ###
 
+#' @rdname do_query
 #' @export
-#' @import data.table
+#' @importFrom data.table rbindlist
 #' @import httr
 #' @import jsonlite
 setMethod(f = 'do_query',
     signature = c('character','character','character','character'),
     definition = function(context,input_item,input_value,output_item) {
         
+        
+        if (length(output_item)>1) {
+            stop('output_item must be of length 1')
+        }
         if (!(context %in% names(metabolomicsWorkbenchR::context))) {
             stop(paste0('"',context, '" is not a valid context.'))
         }
@@ -333,7 +376,7 @@ setMethod(f = 'do_query',
         if (length(input_item)>1) {
             input_item=as.list(input_item)
             for (k in 1:length(input_item)) {
-                input_item[[k]]=metabolomicsWorkbenchR::input_item[[input_item]]
+                input_item[[k]]=metabolomicsWorkbenchR::input_item[[k]]
             }
         } else {
             input_item=metabolomicsWorkbenchR::input_item[[input_item]]
@@ -346,8 +389,8 @@ setMethod(f = 'do_query',
     }
 )
 
-#' @export
-#' @import data.table
+#' @rdname do_query
+#' @importFrom data.table rbindlist
 #' @import httr
 #' @import jsonlite
 setMethod(f = 'do_query',
@@ -402,7 +445,7 @@ setMethod(f = 'do_query',
             context@name,
             paste(input_value,collapse='/',sep=''),
             sep='/')
-
+        
         out = use_api(str,output_item,input_value)
         
         return(out)
@@ -410,6 +453,7 @@ setMethod(f = 'do_query',
     }
 )
 
+#' @rdname do_query
 #' @export
 setMethod(f = 'do_query',
     signature = c('mw_moverz_context','list','character','character'),
@@ -423,6 +467,7 @@ setMethod(f = 'do_query',
     }
 )
 
+#' @rdname do_query
 #' @export
 setMethod(f = 'do_query',
     signature = c('mw_moverz_context','list','character','missing'),
@@ -433,6 +478,7 @@ setMethod(f = 'do_query',
     }
 )
 
+#' @rdname do_query
 #' @export
 setMethod(f = 'do_query',
     signature = c('mw_moverz_context','character','character','missing'),
@@ -444,6 +490,7 @@ setMethod(f = 'do_query',
     }
 )
 
+#' @rdname do_query
 #' @export
 setMethod(f = 'do_query',
     signature = c('character','character','character','missing'),
@@ -458,7 +505,9 @@ setMethod(f = 'do_query',
 )
 
 
-#' @import data.table
+#' @rdname do_query
+#' @export
+#' @importFrom data.table rbindlist
 #' @import httr
 #' @import jsonlite
 setMethod(f = 'do_query',
@@ -507,7 +556,7 @@ setMethod(f = 'do_query',
             context@name,
             paste(input_value,collapse='/',sep=''),
             sep='/')
-
+        
         out = use_api(str,output_item,input_value)
         
         return(out)
@@ -515,6 +564,7 @@ setMethod(f = 'do_query',
     }
 )
 
+#' @rdname do_query
 #' @export
 setMethod(f = 'do_query',
     signature = c('mw_exactmass_context','list','character','character'),
@@ -528,6 +578,7 @@ setMethod(f = 'do_query',
     }
 )
 
+#' @rdname do_query
 #' @export
 setMethod(f = 'do_query',
     signature = c('mw_exactmass_context','list','character','missing'),
@@ -538,6 +589,7 @@ setMethod(f = 'do_query',
     }
 )
 
+#' @rdname do_query
 #' @export
 setMethod(f = 'do_query',
     signature = c('mw_exactmass_context','character','character','missing'),
@@ -549,6 +601,7 @@ setMethod(f = 'do_query',
     }
 )
 
+#' @rdname do_query
 #' @export
 setMethod(f = 'do_query',
     signature = c('character','character','character','missing'),
@@ -563,8 +616,9 @@ setMethod(f = 'do_query',
 )
 
 
+#' @rdname do_query
 #' @export
-#' @import data.table
+#' @importFrom data.table rbindlist
 #' @import httr
 #' @import jsonlite
 setMethod(f = 'do_query',
@@ -592,6 +646,8 @@ setMethod(f = 'do_query',
     }
 )
 
+#' @rdname check_pattern
+#' @export
 setMethod(f = 'check_pattern',
     signature = 'mw_input_item',
     definition = function(I,input_value,match) {
@@ -605,6 +661,8 @@ setMethod(f = 'check_pattern',
     }
 )
 
+#' @rdname check_puts
+#' @export
 setMethod(f = 'check_puts',
     signature = 'mw_input_item',
     definition = function(input_item,output_item) {
@@ -618,13 +676,12 @@ setMethod(f = 'check_puts',
 )
 
 use_api = function(str,output_item=NULL,input_value=NULL) {
-    print(str)
+
     response = httr::GET(
         url=str
     )
     
-    print(response$headers$`content-type`)
-    
+
     if (response$headers$`content-type`=="image/png") {
         # do nothing
     } else {
@@ -638,3 +695,184 @@ use_api = function(str,output_item=NULL,input_value=NULL) {
     
     return(out)
 }
+
+
+##### SummarizedExperiment
+mw_SE_item = function(name,fields,inputs,parse_fcn,match,...) {
+    out=new('mw_SE_item',
+        name=name,
+        fields=fields,
+        inputs=inputs,
+        parse_fcn=parse_fcn,
+        match=match,
+        locked = c('name','fields','inputs','parse_fcn','match')
+    )
+    return(out)
+}
+
+.mw_SE_item = setClass(
+    Class = 'mw_SE_item',
+    contains = 'mw_output_item'
+)
+
+#' @rdname do_query
+#' @export
+#' @importFrom data.table rbindlist
+#' @import httr
+#' @import jsonlite
+setMethod(f = 'do_query',
+    signature = c('mw_context','mw_input_item','character','mw_SE_item'),
+    definition = function(context,input_item,input_value,output_item) {
+        
+        err=list()
+        # check we have a study context
+        if (context$name != 'study') {
+            err=c(err,'SummarizedExperiment output_item can only be used with "study" context')
+        }
+        if(length(err)>0) {
+            stop(err)
+        }
+        
+        ## get data
+        if (input_item$name == 'study_id') {
+            df = do_query(context$name,input_item$name,input_value,'data')
+            
+            ## multiple analysis might be returned
+            out=list()
+            for (k in 1:length(df)) {
+                
+                # raw data
+                X = df[[k]][,8:ncol(df[[k]])]
+                rownames(X)=df[[k]]$metabolite_id
+                
+                # feature meta data
+                VM  = df[[k]][,4:6]
+                rownames(VM)=df[[k]]$metabolite_id
+                
+                # additional metadata
+                M = list(
+                    data_source = 'Metabolomics Workbench',
+                    study_id=df[[k]]$study_id[1],
+                    analysis_id=df[[k]]$analysis_id[1],
+                    analysis_summary=df[[k]]$analysis_summary[1],
+                    units=df[[k]]$units[1]
+                )
+                
+                # factors
+                SM = do_query('study','study_id',input_value,'factors')[[1]]
+                # merge with data samples in case some are missing
+                SM=merge(data.frame('local_sample_id'=colnames(X)),SM,by='local_sample_id',all=TRUE,sort=FALSE)
+                rownames(SM)=SM$local_sample_id
+                
+                M[['subject_type']]=SM$subject_type[1]
+                SM$subject_type=NULL
+                
+                # SE object
+                SE = SummarizedExperiment(
+                    assays=list(X),
+                    rowData = VM,
+                    colData = SM,
+                    metadata = M
+                )
+                
+                out[[df[[k]]$analysis_id[1]]]=SE
+            }
+            
+            if (length(out)==1)  {
+                out=out[[1]]
+            }
+            
+            return(out)
+        } else if (input_item$name == 'analysis_id') {
+            df = do_query(context$name,input_item$name,input_value,'datatable')
+            nf=attributes(df)$number_of_factors
+            
+            X=as.data.frame(t(df))
+            
+            SM=as.data.frame(t(X[1:nf,]))
+            X=X[nf+1:nrow(X),]
+            
+            VM=data.frame(metabolite=rownames(X))
+            
+            rownames(X)=1:nrow(X)
+            
+            M = list(
+                'data_source' = 'Metabolomics Workbench',
+                'analysis_id' = input_value
+            )
+            
+            SE = SummarizedExperiment(
+                assays = X,
+                rowData = VM,
+                colData = SM,
+                metadata = M
+            )
+            
+            out=list(SE)
+            return(out)
+        }
+        
+    }
+)
+
+##### SummarizedExperiment untargeted
+mw_untarg_SE_item = function(name,fields,inputs,parse_fcn,match,...) {
+    out=new('mw_untarg_SE_item',
+        name=name,
+        fields=fields,
+        inputs=inputs,
+        parse_fcn=parse_fcn,
+        match=match,
+        locked = c('name','fields','inputs','parse_fcn','match')
+    )
+    return(out)
+}
+
+.mw_untarg_SE_item = setClass(
+    Class = 'mw_untarg_SE_item',
+    contains = 'mw_output_item'
+)
+
+#' @rdname do_query
+#' @export
+#' @importFrom data.table rbindlist
+#' @import httr
+#' @import jsonlite
+#' @import SummarizedExperiment
+setMethod(f = 'do_query',
+    signature = c('mw_context','mw_input_item','character','mw_untarg_SE_item'),
+    definition = function(context,input_item,input_value,output_item) {
+        
+        ## get data
+        
+        df = do_query(context$name,input_item$name,input_value,'untarg_data')
+        fq = do_query('study','analysis_id',input_value,'untarg_factors')
+        
+        X=as.data.frame(t(df))
+        
+        nf=ncol(fq)-1
+        
+        SM=as.data.frame(t(X[1:nf,]))
+        X=X[nf+1:nrow(X),]
+        
+        VM=data.frame(feature_id=rownames(X))
+        
+        rownames(X)=1:nrow(X)
+        
+        M = list(
+            'data_source' = 'Metabolomics Workbench (untargeted)',
+            'analysis_id' = input_value
+        )
+        
+        SE = SummarizedExperiment(
+            assays = X,
+            rowData = VM,
+            colData = SM,
+            metadata = M
+        )
+        
+        return(SE)
+        
+    }
+)
+

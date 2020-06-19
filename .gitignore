@@ -39,3 +39,5 @@ vignettes/*.pdf
 .Renviron
 *.pdf
 inst/doc
+doc
+Meta

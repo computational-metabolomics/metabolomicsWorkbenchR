@@ -159,7 +159,7 @@ test_that("study_context untarg_factors data frame is as expected when using str
 
 test_that("study_context data data frame is as expected when using strings", {
     df =  do_query(context='study',input_item='study_id',input_value='ST000001',output_item='data')
-    
+    df=df[[1]]
     
     # number columns
     expect_equal(ncol(df),31)
@@ -171,12 +171,12 @@ test_that("study_context untarg_data data frame is as expected when using string
     df =  do_query(context='study',input_item='analysis_id',input_value='AN000023',output_item='untarg_data')
     
     # number columns
-    expect_equal(ncol(df),4486)
+    expect_equal(ncol(df),4485)
     # number rows
     expect_equal(nrow(df),114)
     
     # check parse of factors
-    expect_equal(colnames(df)[2],'AFTER_MEAL_TIME')
+    expect_equal(colnames(df)[1],'AFTER_MEAL_TIME')
     
 })
 
@@ -185,12 +185,12 @@ test_that("study_context datatable data frame is as expected when using strings"
     
     
     # number columns
-    expect_equal(ncol(df),253)
+    expect_equal(ncol(df),252)
     # number rows
     expect_equal(nrow(df),114)
     
     # check parse of factors
-    expect_equal(colnames(df)[2],'AFTER_MEAL_TIME')
+    expect_equal(colnames(df)[1],'AFTER_MEAL_TIME')
     
 })
 

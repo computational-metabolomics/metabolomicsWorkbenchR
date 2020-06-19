@@ -1,10 +1,20 @@
 Package: metabolomicsWorkbenchR
 Type: Package
-Title: Metabolomics Workbench RESTful API
-Version: 0.0.1
-Author: Gavin lloyd
-Maintainer: Gavin Lloyd <g.r.lloyd@bham.ac.uk>
-Description: Provided functions for interfacing with the Metabolomics Workbench RESTful API to access study information and data.
+Title: Metabolomics Workbench in R
+Version: 0.99.0
+Authors@R: c(
+    person(
+        c("Gavin","Rhys"),
+          "Lloyd",
+           role=c("aut","cre"),
+           email="g.r.lloyd@bham.ac.uk"),
+    person(
+        c("Ralf","Johannes", "Maria"),
+          "Weber",
+           role=c("aut"),
+           email="r.j.weber@bham.ac.uk")
+           )
+Description: Provides functions for interfacing with the Metabolomics Workbench RESTful API to access study information and data.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -14,17 +24,20 @@ Collate:
     'generics.R'
     'class_def.R'
     'constants.R'
+    'metabolomicsWorkbenchR.R'
 Imports: 
     data.table,
     httr,
     jsonlite,
     methods,
+    SummarizedExperiment,
     utils
 Suggests: 
-    biocstyle,
+    BiocStyle,
     covr,
     knitr,
     rmarkdown,
     testthat
 VignetteBuilder: 
     knitr
+biocViews: Software, Metabolomics
