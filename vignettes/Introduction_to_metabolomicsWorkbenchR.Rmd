@@ -147,29 +147,44 @@ df = do_query(
 df[1:3,1:3]
 ```
 
-## `output_item` "SummarizedExperiment"
-This output refers to the study context and uses multiple queries to return a SummarizedExperiment object for a study_id or analysis_id.
+## `output_item` "SummarizedExperiment" and "DatasetExperiment"
+This output refers to the study context and uses multiple queries to return a SummarizedExperiment or DatasetExperiment object for a study_id or analysis_id.
 
 ```{r}
 SE = do_query(
     context = 'study',
     input_item = 'study_id',
     input_value = 'ST000001',
-    output_item = 'SummarizedExperiment'
+    output_item = 'SummarizedExperiment' # or 'DatasetExperiment'
 )
 
 SE
+
 ```
 
-## `output_item` "untarg_SummarizedExperiment"
-This output refers to the study context and uses multiple queries to return a SummarizedExperiment object of untargeted data for a study_id or analysis_id.
+## `output_item` "MultiAssayExperiment"
+This output refers to the study context and uses multiple queries to return a MultiAssayExperiment object for a study_id.
+
+```{r}
+MAE = do_query(
+    context = 'study',
+    input_item = 'study_id',
+    input_value = 'ST000009',
+    output_item = 'MultiAssayExperiment' 
+)
+
+MAE
+```
+
+## `output_item` "untarg_SummarizedExperiment" and "untarg_DatasetExperiment"
+This output refers to the study context and uses multiple queries to return a SummarizedExperiment or DatasetExperiment object of untargeted data for an analysis_id.
 
 ```{r}
 SE = do_query(
     context = 'study',
     input_item = 'analysis_id',
     input_value = 'AN000023',
-    output_item = 'untarg_SummarizedExperiment'
+    output_item = 'untarg_SummarizedExperiment' # or 'untarg_DatasetExperiment'
 )
 
 SE
