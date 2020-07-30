@@ -268,7 +268,7 @@ test_that("moverz_context name data frame is as expected when using strings for 
     # number columns
     expect_equal(ncol(df),10)
     # number rows
-    expect_equal(nrow(df),87)
+    expect_equal(nrow(df),74)
 })
 
 test_that("moverz_context name data frame is as expected when using strings for lipids", {
