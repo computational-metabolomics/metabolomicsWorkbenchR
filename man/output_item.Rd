@@ -5,7 +5,7 @@
 \alias{output_item}
 \title{Output items}
 \format{
-An object of class \code{list} of length 28.
+An object of class \code{list} of length 31.
 }
 \usage{
 output_item

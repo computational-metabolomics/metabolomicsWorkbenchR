@@ -15,6 +15,9 @@
 \alias{do_query,mw_context,mw_input_item,character,mw_output_item-method}
 \alias{do_query,mw_context,mw_input_item,character,mw_SE_item-method}
 \alias{do_query,mw_context,mw_input_item,character,mw_untarg_SE_item-method}
+\alias{do_query,mw_context,mw_input_item,character,mw_DE_item-method}
+\alias{do_query,mw_context,mw_input_item,character,mw_untarg_DE_item-method}
+\alias{do_query,mw_context,mw_input_item,character,mw_MAE_item-method}
 \title{Query the Metabolomics Workbench database}
 \usage{
 do_query(context, input_item, input_value, output_item)
@@ -46,6 +49,12 @@ do_query(context, input_item, input_value, output_item)
 \S4method{do_query}{mw_context,mw_input_item,character,mw_SE_item}(context, input_item, input_value, output_item)
 
 \S4method{do_query}{mw_context,mw_input_item,character,mw_untarg_SE_item}(context, input_item, input_value, output_item)
+
+\S4method{do_query}{mw_context,mw_input_item,character,mw_DE_item}(context, input_item, input_value, output_item)
+
+\S4method{do_query}{mw_context,mw_input_item,character,mw_untarg_DE_item}(context, input_item, input_value, output_item)
+
+\S4method{do_query}{mw_context,mw_input_item,character,mw_MAE_item}(context, input_item, input_value, output_item)
 }
 \arguments{
 \item{context}{A valid context name (character)}

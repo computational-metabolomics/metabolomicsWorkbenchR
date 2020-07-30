@@ -280,6 +280,30 @@ output_item$datatable=mw_output_item(
     parse_fcn=parse_datatable
 )
 
+output_item$DatasetExperiment=mw_DE_item(
+    name='DatasetExperiment',
+    fields='',
+    inputs=c('study_id','analysis_id'),
+    match='exact',
+    parse_fcn=function(response,output_item,input_value){}
+)
+
+output_item$untarg_DatasetExperiment=mw_untarg_DE_item(
+    name='untarg_DatasetExperiment',
+    fields='',
+    inputs=c('analysis_id'),
+    match='exact',
+    parse_fcn=function(response,output_item,input_value){}
+)
+
+output_item$MultiAssayExperiment=mw_MAE_item(
+    name='MultiAssayExperiment',
+    fields='',
+    inputs=c('study_id'),
+    match='exact',
+    parse_fcn=function(response,output_item,input_value){}
+)
+
 output_item$SummarizedExperiment=mw_SE_item(
     name='SummarizedExperiment',
     fields='',
@@ -289,13 +313,12 @@ output_item$SummarizedExperiment=mw_SE_item(
 )
 
 output_item$untarg_SummarizedExperiment=mw_untarg_SE_item(
-    name='SummarizedExperiment',
+    name='untarg_SummarizedExperiment',
     fields='',
     inputs=c('analysis_id'),
     match='exact',
     parse_fcn=function(response,output_item,input_value){}
 )
-
 ###################### COMPOUND CONTEXT #####################################
 input_item$regno = mw_input_item(
     name = 'regno',
@@ -303,6 +326,7 @@ input_item$regno = mw_input_item(
         exact='^[0-9]{1,12}?$',
         partial='^[0-9]{1,12}?$')
 )
+
 input_item$formula = mw_input_item(
     name = 'formula',
     pattern = list(

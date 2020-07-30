@@ -30,6 +30,8 @@ Imports:
     httr,
     jsonlite,
     methods,
+    MultiAssayExperiment,
+    struct,
     SummarizedExperiment,
     utils
 Suggests: 

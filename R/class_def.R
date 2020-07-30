@@ -720,6 +720,7 @@ mw_SE_item = function(name,fields,inputs,parse_fcn,match,...) {
 #' @importFrom data.table rbindlist
 #' @import httr
 #' @import jsonlite
+#' @import MultiAssayExperiment
 setMethod(f = 'do_query',
     signature = c('mw_context','mw_input_item','character','mw_SE_item'),
     definition = function(context,input_item,input_value,output_item) {
@@ -737,9 +738,13 @@ setMethod(f = 'do_query',
         if (input_item$name == 'study_id') {
             df = do_query(context$name,input_item$name,input_value,'data')
             
+           
+            
             ## multiple analysis might be returned
             out=list()
             for (k in 1:length(df)) {
+                
+                S=do_query('study','study_id',input_value,'summary')
                 
                 # raw data
                 X = df[[k]][,8:ncol(df[[k]])]
@@ -755,8 +760,11 @@ setMethod(f = 'do_query',
                     study_id=df[[k]]$study_id[1],
                     analysis_id=df[[k]]$analysis_id[1],
                     analysis_summary=df[[k]]$analysis_summary[1],
-                    units=df[[k]]$units[1]
+                    units=df[[k]]$units[1],
+                    name=paste0(S$study_id[[1]],':',df[[k]]$analysis_id[1]),
+                    description=S$study_title[[1]]
                 )
+                
                 
                 # factors
                 SM = do_query('study','study_id',input_value,'factors')[[1]]
@@ -798,7 +806,9 @@ setMethod(f = 'do_query',
             
             M = list(
                 'data_source' = 'Metabolomics Workbench',
-                'analysis_id' = input_value
+                'analysis_id' = input_value,
+                'name'=input_value,
+                'description'='Downloaded from Metabolomics Workbench'
             )
             
             SE = SummarizedExperiment(
@@ -808,7 +818,7 @@ setMethod(f = 'do_query',
                 metadata = M
             )
             
-            out=list(SE)
+            out=SE
             return(out)
         }
         
@@ -876,3 +886,144 @@ setMethod(f = 'do_query',
     }
 )
 
+
+##### DatasetExperiment
+mw_DE_item = function(name,fields,inputs,parse_fcn,match,...) {
+    out=new('mw_DE_item',
+        name=name,
+        fields=fields,
+        inputs=inputs,
+        parse_fcn=parse_fcn,
+        match=match,
+        locked = c('name','fields','inputs','parse_fcn','match')
+    )
+    return(out)
+}
+
+.mw_DE_item = setClass(
+    Class = 'mw_DE_item',
+    contains = 'mw_output_item'
+)
+
+#' @rdname do_query
+#' @export
+#' @importFrom data.table rbindlist
+#' @import httr
+#' @import jsonlite
+#' @import struct
+setMethod(f = 'do_query',
+    signature = c('mw_context','mw_input_item','character','mw_DE_item'),
+    definition = function(context,input_item,input_value,output_item) {
+        err=list()
+        # check we have a study context
+        if (context$name != 'study') {
+            err=c(err,'DatasetExperiment output_item can only be used with "study" context')
+        }
+        if(length(err)>0) {
+            stop(err)
+        }
+        
+        # use SE, then convert to DE
+        SE = do_query(context$name,input_item$name,input_value,'SummarizedExperiment')
+        
+        if (is(SE,'SummarizedExperiment')) {
+            DE=as.DatasetExperiment(SE)
+            DE$name=input_value
+            if (input_item$name=='study_id') {
+                desc=do_query('study',input_item$name,input_value,'summary')
+                DE$description=desc$study_title[[1]]
+            } else {
+                DE$description = 'Downloaded from Metabolomics Workbench'
+            }
+            return(DE)
+        }
+        
+        if (is(SE,'list')) {
+            DE=lapply(SE,as.DatasetExperiment)
+            return(DE)
+        }
+})
+
+##### DatasetExperiment untargeted
+mw_untarg_DE_item = function(name,fields,inputs,parse_fcn,match,...) {
+    out=new('mw_untarg_DE_item',
+        name=name,
+        fields=fields,
+        inputs=inputs,
+        parse_fcn=parse_fcn,
+        match=match,
+        locked = c('name','fields','inputs','parse_fcn','match')
+    )
+    return(out)
+}
+
+.mw_untarg_DE_item = setClass(
+    Class = 'mw_untarg_DE_item',
+    contains = 'mw_output_item'
+)
+
+#' @rdname do_query
+#' @export
+#' @importFrom data.table rbindlist
+#' @import httr
+#' @import jsonlite
+#' @import struct
+setMethod(f = 'do_query',
+    signature = c('mw_context','mw_input_item','character','mw_untarg_DE_item'),
+    definition = function(context,input_item,input_value,output_item) {
+
+        # use SE then convert
+        SE = do_query(mw_context$name,mw_input_item$name,input_value,'untarg_SummarizedExperiment')
+        DE = as.DatasetExperiment(SE)
+        return(DE)
+    })
+
+
+
+##### MultiAssayExperiment
+mw_MAE_item = function(name,fields,inputs,parse_fcn,match,...) {
+    out=new('mw_MAE_item',
+        name=name,
+        fields=fields,
+        inputs=inputs,
+        parse_fcn=parse_fcn,
+        match=match,
+        locked = c('name','fields','inputs','parse_fcn','match')
+    )
+    return(out)
+}
+
+.mw_MAE_item = setClass(
+    Class = 'mw_MAE_item',
+    contains = 'mw_output_item'
+)
+
+#' @rdname do_query
+#' @export
+#' @importFrom data.table rbindlist
+#' @import httr
+#' @import jsonlite
+#' @import MultiAssayExperiment
+setMethod(f = 'do_query',
+    signature = c('mw_context','mw_input_item','character','mw_MAE_item'),
+    definition = function(context,input_item,input_value,output_item) {
+        err=list()
+        # check we have a study context
+        if (context$name != 'study') {
+            err=c(err,'MultiAssayExperiment output_item can only be used with "study" context')
+        }
+        if(length(err)>0) {
+            stop(err)
+        }
+        
+        # use SE, then convert to DE
+        SE = do_query(context$name,input_item$name,input_value,'SummarizedExperiment')
+        
+        if (is(SE,'SummarizedExperiment')) {
+           SE=list(SE)
+           names(SE)=input_value
+        }
+        
+        SE=MatchedAssayExperiment(SE,colData=colData(SE[[1]]))
+        return(SE)
+    })
