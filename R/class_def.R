@@ -445,7 +445,7 @@ setMethod(f = 'do_query',
             context@name,
             paste(input_value,collapse='/',sep=''),
             sep='/')
-        
+         print(str)
         out = use_api(str,output_item,input_value)
         
         return(out)
@@ -556,7 +556,7 @@ setMethod(f = 'do_query',
             context@name,
             paste(input_value,collapse='/',sep=''),
             sep='/')
-        
+        print(str)
         out = use_api(str,output_item,input_value)
         
         return(out)
@@ -639,7 +639,7 @@ setMethod(f = 'do_query',
             paste(input_value,collapse='/',sep=''),
             paste(output_item$name,collapse=',',sep=''),
             sep='/')
-        
+        print(str)
         out = use_api(str,output_item,input_value)
         
         return(out)
