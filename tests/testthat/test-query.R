@@ -402,3 +402,20 @@ test_that("exactmass_context name data frame is as expected", {
     # number rows
     expect_equal(nrow(df),1) #25
 })
+
+test_that("study factors is as expected", {
+    # df=do_query('study','study_id','ST000001','factors')
+    
+    context=context$study
+    input_item=input_item$study_id
+    input_value='ST000001'
+    output_item=output_item$factors
+    
+    df = parse_factors(R[[25]],output_item,input_value)
+    df=df[[1]]
+    
+    # number columns
+    expect_equal(ncol(df),5)
+    # number rows
+    expect_equal(nrow(df),24) #25
+})

@@ -22,7 +22,8 @@ Q=list(
     "https://www.metabolomicsworkbench.org/rest/moverz/MB/635.52/M+H/0.5",
     "https://www.metabolomicsworkbench.org/rest/moverz/LIPIDS/513.45/M-2H/0.2",
     "https://www.metabolomicsworkbench.org/rest/moverz/REFMET/255.2/M+H/0.2",
-    "https://www.metabolomicsworkbench.org/rest/exactmass/PC(34:1)/M+H"
+    "https://www.metabolomicsworkbench.org/rest/exactmass/PC(34:1)/M+H",
+    "https://www.metabolomicsworkbench.org/rest/study/study_id/ST000001/factors"
 )
 
 R=list()
