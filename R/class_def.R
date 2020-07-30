@@ -973,7 +973,7 @@ setMethod(f = 'do_query',
     definition = function(context,input_item,input_value,output_item) {
 
         # use SE then convert
-        SE = do_query(mw_context$name,mw_input_item$name,input_value,'untarg_SummarizedExperiment')
+        SE = do_query(context$name,input_item$name,input_value,'untarg_SummarizedExperiment')
         DE = as.DatasetExperiment(SE)
         return(DE)
     })
