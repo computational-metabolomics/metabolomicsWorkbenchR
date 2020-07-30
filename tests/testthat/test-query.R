@@ -5,8 +5,8 @@ test_that("study_context metabolite_id data frame is as expected", {
     input_value='ME000096'
     output_item=output_item$metabolite_info
     
-    df = output_item$parse_fcn(R[[1]],output_item,input_item)
-
+    df = parse_data_frame(R[[1]],output_item,input_item)
+    
     # number rows
     expect_equal(nrow(df),1) 
     # number columns
@@ -25,7 +25,7 @@ test_that("study_context summary data frame is as expected", {
     input_value='ST000001'
     output_item=output_item$summary
     
-    df = output_item$parse_fcn(R[[4]],output_item,input_item)
+    df = parse_data_frame(R[[4]],output_item,input_item)
     
     # number rows
     expect_equal(nrow(df),1)
@@ -42,7 +42,7 @@ test_that("study_context number_of_metabolites data frame is as expected", {
     input_value='ST000001'
     output_item=output_item$number_of_metabolites
     
-    df = output_item$parse_fcn(R[[5]],output_item,input_item)
+    df = parse_data_frame(R[[5]],output_item,input_item)
     
     # df =  do_query(context='study',input_item='study_id',input_value='ST000001',output_item='number_of_metabolites')
     
@@ -63,7 +63,7 @@ test_that("study_context analysis data frame is as expected", {
     input_value='ST000001'
     output_item=output_item$analysis
     
-    df = output_item$parse_fcn(R[[6]],output_item,input_item)
+    df = parse_data_frame(R[[6]],output_item,input_item)
     
     # number rows
     expect_equal(nrow(df),1)
@@ -81,7 +81,7 @@ test_that("study_context metabolites data frame is as expected", {
     input_value='ST000001'
     output_item=output_item$metabolites
     
-    df = output_item$parse_fcn(R[[7]],output_item,input_item)
+    df = parse_data_frame(R[[7]],output_item,input_item)
     
     # number rows
     expect_equal(nrow(df),102)
@@ -99,7 +99,7 @@ test_that("study_context species data frame is as expected", {
     input_value='ST000001'
     output_item=output_item$species
     
-    df = output_item$parse_fcn(R[[8]],output_item,input_item)
+    df = parse_data_frame(R[[8]],output_item,input_item)
     
     # number rows
     expect_equal(nrow(df),1)
@@ -117,7 +117,7 @@ test_that("study_context source data frame is as expected", {
     input_value='ST000001'
     output_item=output_item$source
     
-    df = output_item$parse_fcn(R[[9]],output_item,input_item)
+    df = parse_data_frame(R[[9]],output_item,input_item)
     # number rows
     expect_equal(nrow(df),1)
     # number columns
@@ -134,7 +134,7 @@ test_that("study_context disease data frame is as expected", {
     input_value='ST000010'
     output_item=output_item$disease
     
-    df = output_item$parse_fcn(R[[10]],output_item,input_item)
+    df = parse_data_frame(R[[10]],output_item,input_item)
     
     # number rows
     expect_equal(nrow(df),1)
@@ -152,7 +152,7 @@ test_that("study_context untarg_studies data frame is as expected", {
     input_value='ST000010'
     output_item=output_item$untarg_studies
     
-    df = output_item$parse_fcn(R[[11]],output_item,input_item)
+    df = parse_data_frame(R[[11]],output_item,input_item)
     
     # number columns
     expect_equal(ncol(df),6)
@@ -168,7 +168,7 @@ test_that("study_context untarg_factors data frame is as expected", {
     input_value='AN000023'
     output_item=output_item$untarg_factors
     
-    df = output_item$parse_fcn(R[[12]],output_item,input_item)
+    df = parse_untarg_factors(R[[12]],output_item,input_item)
     
     # number columns
     expect_equal(ncol(df),5)
@@ -183,7 +183,7 @@ test_that("study_context data data frame is as expected", {
     input_value='ST000001'
     output_item=output_item$data
     
-    df = output_item$parse_fcn(R[[13]],output_item,input_item)
+    df = parse_data(R[[13]],output_item,input_item)
     
     df=df[[1]]
     
@@ -201,7 +201,7 @@ test_that("study_context untarg_data data frame is as expected", {
     input_value='AN000023'
     output_item=output_item$untarg_data
     
-    df = output_item$parse_fcn(R[[14]],output_item,input_item)
+    df = parse_untarg_data(R[[14]],output_item,input_item)
     
     # number columns
     expect_equal(ncol(df),4485)
@@ -221,7 +221,7 @@ test_that("study_context datatable data frame is as expected", {
     input_value='AN000023'
     output_item=output_item$datatable
     
-    df = output_item$parse_fcn(R[[15]],output_item,input_item)
+    df = parse_datatable(R[[15]],output_item,input_item)
     
     # number columns
     expect_equal(ncol(df),252)
@@ -241,7 +241,7 @@ test_that("compound_context compound_exact data frame is as expected", {
     input_value='11'
     output_item=output_item$compound_exact
     
-    df = output_item$parse_fcn(R[[16]],output_item,input_item)
+    df = parse_data_frame(R[[16]],output_item,input_item)
     
     # number columns
     expect_equal(ncol(df),13)
@@ -261,7 +261,7 @@ test_that("compound_context classification data frame is as expected", {
     input_value='11'
     output_item=output_item$classification
     
-    df = output_item$parse_fcn(R[[17]],output_item,input_item)
+    df = parse_data_frame(R[[17]],output_item,input_item)
     
     # number columns
     expect_equal(ncol(df),12)
@@ -281,7 +281,7 @@ test_that("protein_context protein_exact data frame is as expected", {
     input_value='Q13085'
     output_item=output_item$protein_exact
     
-    df = output_item$parse_fcn(R[[18]],output_item,input_item)
+    df = parse_data_frame(R[[18]],output_item,input_item)
     
     # number columns
     expect_equal(ncol(df),16)
@@ -300,7 +300,7 @@ test_that("gene_context gene_exact data frame is as expected", {
     input_value='MGP000016'
     output_item=output_item$gene_exact
     
-    df = output_item$parse_fcn(R[[19]],output_item,input_item)
+    df = parse_data_frame(R[[19]],output_item,input_item)
     
     # number columns
     expect_equal(ncol(df),12)
@@ -319,7 +319,7 @@ test_that("refmet_context name data frame is as expected", {
     input_value='Cholesterol'
     output_item=output_item$refmet_exact
     
-    df = output_item$parse_fcn(R[[20]],output_item,input_item)
+    df = parse_data_frame(R[[20]],output_item,input_item)
     
     # number columns
     expect_equal(ncol(df),10)
@@ -340,7 +340,7 @@ test_that("moverz_context name data frame is as expected for mb", {
     input_value=list('MB','635.52','M+H','0.5')
     output_item=output_item$moverz
     
-    df = output_item$parse_fcn(R[[21]],output_item,input_value)
+    df = parse_moverz(R[[21]],output_item,input_value)
     
     # number columns
     expect_equal(ncol(df),10)
@@ -358,7 +358,7 @@ test_that("moverz_context name data frame is as expected for lipids", {
     input_value=list('LIPIDS','513.45','M-2H','0.2')
     output_item=output_item$moverz
     
-    df = output_item$parse_fcn(R[[22]],output_item,input_value)
+    df = parse_moverz(R[[22]],output_item,input_value)
     
     # number columns
     expect_equal(ncol(df),6)
@@ -376,7 +376,7 @@ test_that("moverz_context name data frame is as expected for refmet", {
     input_value=list('REFMET','255.2','M+H','0.2')
     output_item=output_item$moverz
     
-    df = output_item$parse_fcn(R[[23]],output_item,input_value)
+    df = parse_moverz(R[[23]],output_item,input_value)
     
     # number columns
     expect_equal(ncol(df),10)
@@ -395,7 +395,7 @@ test_that("exactmass_context name data frame is as expected", {
     input_value=list('PC(34:1)','M+H')
     output_item=output_item$exactmass
     
-    df = output_item$parse_fcn(R[[24]],output_item,input_value)
+    df = parse_exactmass(R[[24]],output_item,input_value)
     
     # number columns
     expect_equal(ncol(df),4)
