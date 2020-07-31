@@ -26,10 +26,21 @@ Q=list(
     "https://www.metabolomicsworkbench.org/rest/study/study_id/ST000001/factors"
 )
 
+S=list(
+    summary=4,
+    untarg_factors=12,
+    data=13,
+    untarg_data=14,
+    datatable=15,
+    factors=25,
+    moverz=21,
+    exactmass=24
+)
+
 R=list()
 
 for (k in 1:length(Q)) {
     R[[k]]=httr::GET(url=Q[[k]])
 }
 
-usethis::use_data(R,internal=TRUE,overwrite=TRUE)
+usethis::use_data(R,S,internal=TRUE,overwrite=TRUE)

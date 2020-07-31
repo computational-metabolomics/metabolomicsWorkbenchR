@@ -381,7 +381,7 @@ test_that("moverz_context name data frame is as expected for refmet", {
     # number columns
     expect_equal(ncol(df),10)
     # number rows
-    expect_equal(nrow(df),33) #24
+    expect_equal(nrow(df),34) #24
 })
 
 test_that("exactmass_context name data frame is as expected", {

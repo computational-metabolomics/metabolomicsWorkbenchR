@@ -163,11 +163,6 @@ setMethod(f = 'is_valid',
         
         input_valid = all(input_item %in% context@input_items)
         
-        length_valid1 = length(input_value[1])==1 # database
-        length_valid2 = length(input_value[2])==1 # mz
-        length_valid3 = length(input_value[3])==1 # ion
-        length_valid4 = length(input_value[4])==1 # tol
-        
         range_valid2 = as.numeric(input_value[2]) >= context@mz_range[1] & as.numeric(input_value[2]) <= context@mz_range[2]
         ion_valid = input_value[3] %in% context@ion_types
         range_valid4 = as.numeric(input_value[4]) >= context@tol_range[1] & as.numeric(input_value[4]) <= context@tol_range[2]
@@ -176,18 +171,6 @@ setMethod(f = 'is_valid',
         err=list()
         if (!input_valid) {
             err=c(err,paste0('An input_item is not valid for this context.\n'))
-        }
-        if (!length_valid1) {
-            err=c(err,"Length of input_value[1] is limited to 1 for this context.\n")
-        }
-        if (!length_valid2) {
-            err=c(err,"Length of input_value[2] is limited to 1 for this context.\n")
-        }
-        if (!length_valid3) {
-            err=c(err,"Length of input_value[3] is limited to 1 for this context.\n")
-        }
-        if (!length_valid4) {
-            err=c(err,"Length of input_value[4] is limited to 1 for this context.\n")
         }
         if (!range_valid2) {
             err=c(err,"input_value[2] is out of range for this context.\n")
@@ -238,22 +221,11 @@ setMethod(f = 'is_valid',
     signature = c('mw_exactmass_context','character','character','missing'),
     definition = function(context,input_item,input_value) {
         
-        
-        length_valid1 = length(input_value[1])==1
-        length_valid2 = length(input_value[2])==1
-        
-        
         str=strsplit(input_value[1],'(',fixed=TRUE)[[1]]
         lipid_valid = str[1] %in% context@lipid_types
         ion_valid = input_value[2] %in% context@ion_types
         
         err=list()
-        if (!length_valid1) {
-            err=c(err,"Length of input_value[1] is limited to 1 for this context.\n")
-        }
-        if (!length_valid2) {
-            err=c(err,"Length of input_value[2] is limited to 1 for this context.\n")
-        }
         if (!ion_valid) {
             err=c(err,paste0('"',input_value[2], '" is not a valid ion for this context.\n'))
         }
@@ -445,7 +417,11 @@ setMethod(f = 'do_query',
             context@name,
             paste(input_value,collapse='/',sep=''),
             sep='/')
-         print(str)
+        
+        if (identical(Sys.getenv("TESTTHAT"), "true")) { 
+            print(str) 
+        }
+        
         out = use_api(str,output_item,input_value)
         
         return(out)
@@ -556,7 +532,11 @@ setMethod(f = 'do_query',
             context@name,
             paste(input_value,collapse='/',sep=''),
             sep='/')
-        print(str)
+        
+        if (identical(Sys.getenv("TESTTHAT"), "true")) {
+            print(str)
+        }
+        
         out = use_api(str,output_item,input_value)
         
         return(out)
@@ -639,7 +619,10 @@ setMethod(f = 'do_query',
             paste(input_value,collapse='/',sep=''),
             paste(output_item$name,collapse=',',sep=''),
             sep='/')
-        print(str)
+        
+        if (identical(Sys.getenv("TESTTHAT"), "true")) {
+            print(str)
+        }
         out = use_api(str,output_item,input_value)
         
         return(out)
@@ -675,13 +658,20 @@ setMethod(f = 'check_puts',
     }
 )
 
-use_api = function(str,output_item=NULL,input_value=NULL) {
-
-    response = httr::GET(
-        url=str
-    )
+use_api = function(str,output_item=NULL,input_value=NULL,testing=0) {
     
-
+    if (identical(Sys.getenv("TESTTHAT"), "true")) {
+        # return a stored result for testing
+        print('TEST mode')
+        response=R[[S[[output_item$name]]]]
+    } else {
+        # get a response from the API
+        response = httr::GET(
+            url=str
+        )
+    }
+    
+    
     if (response$headers$`content-type`=="image/png") {
         # do nothing
     } else {
@@ -691,6 +681,7 @@ use_api = function(str,output_item=NULL,input_value=NULL) {
             return(NULL)
         }
     }
+    
     out = output_item$parse_fcn(response,output_item,input_value)
     
     return(out)
@@ -738,7 +729,7 @@ setMethod(f = 'do_query',
         if (input_item$name == 'study_id') {
             df = do_query(context$name,input_item$name,input_value,'data')
             
-           
+            
             
             ## multiple analysis might be returned
             out=list()
@@ -942,7 +933,7 @@ setMethod(f = 'do_query',
             DE=lapply(SE,as.DatasetExperiment)
             return(DE)
         }
-})
+    })
 
 ##### DatasetExperiment untargeted
 mw_untarg_DE_item = function(name,fields,inputs,parse_fcn,match,...) {
@@ -971,7 +962,7 @@ mw_untarg_DE_item = function(name,fields,inputs,parse_fcn,match,...) {
 setMethod(f = 'do_query',
     signature = c('mw_context','mw_input_item','character','mw_untarg_DE_item'),
     definition = function(context,input_item,input_value,output_item) {
-
+        
         # use SE then convert
         SE = do_query(context$name,input_item$name,input_value,'untarg_SummarizedExperiment')
         DE = as.DatasetExperiment(SE)
@@ -1020,8 +1011,8 @@ setMethod(f = 'do_query',
         SE = do_query(context$name,input_item$name,input_value,'SummarizedExperiment')
         
         if (is(SE,'SummarizedExperiment')) {
-           SE=list(SE)
-           names(SE)=input_value
+            SE=list(SE)
+            names(SE)=input_value
         }
         
         SE=MatchedAssayExperiment(SE,colData=colData(SE[[1]]))
