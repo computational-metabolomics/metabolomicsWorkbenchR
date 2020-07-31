@@ -22,4 +22,9 @@ library(metabolomicsWorkBench)
 df = do_query(context = 'study', input_item = 'study_title', input_value = 'Diabetes', output_item = 'summary')
 ```
 
-The query interface is designed to mirror the API documentation as closely as possible (https://www.metabolomicsworkbench.org/tools/MWRestAPIv1.0.pdf). All api endpoints are accessible via metabolmicsWorkbenchR. 
+The query interface is designed to mirror the API documentation as closely as possible (https://www.metabolomicsworkbench.org/tools/MWRestAPIv1.0.pdf). 
+
+Methods have been included using multiple queries to coerce study data from the database into different data structures used within Bioconductor, namely `SummarizedExperiment` and `MultiAssayExperiment`.
+
+In addition methods have been included to coerce study data into `DatasetExperiment` objects for compatibility with our `struct` and `structToolbox` packages (both available on Bioconductor).
+
