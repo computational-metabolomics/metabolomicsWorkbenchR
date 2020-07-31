@@ -15,7 +15,7 @@ remotes::install_github('computational-metabolomics/metabolomicsWorkbenchR@maste
 ```
 
 ## Introduction
-This package enables access to the Metabolomics Workbench API (MWA) using a simple query interface. For example, the 'study' context can be queried using the 'study_title' input to search the database for all studies with the keyword 'Disease' in the title and return a study:
+This package enables access to the Metabolomics Workbench API (MWA) using a simple query interface. For example, the 'study' context can be queried using the 'study_title' input to search the database for all studies with the keyword 'Diabetes' in the title and return a summary:
 
 ```{r}
 library(metabolomicsWorkBench)
