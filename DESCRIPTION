@@ -14,7 +14,10 @@ Authors@R: c(
            role=c("aut"),
            email="r.j.weber@bham.ac.uk")
            )
-Description: Provides functions for interfacing with the Metabolomics Workbench RESTful API to access study information and data.
+Description: This package provides functions for interfacing with the 
+Metabolomics Workbench RESTful API to access study, compound, protein and gene
+information. Methods to obtain study data in common Bioconductor formats such
+as SummarizedExperiment and MultiAssayExperiment are also included.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -44,4 +47,4 @@ VignetteBuilder:
     knitr
 biocViews: Software, Metabolomics
 Depends: 
-    R (>= 2.10)
+    R (>= 4.0)
