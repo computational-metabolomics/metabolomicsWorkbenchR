@@ -42,3 +42,5 @@ vignettes/*.pdf
 inst/doc
 doc
 Meta
+# yaml
+*.yml
