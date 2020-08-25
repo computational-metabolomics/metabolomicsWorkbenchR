@@ -347,7 +347,7 @@ setMethod(f = 'do_query',
         
         if (length(input_item)>1) {
             input_item=as.list(input_item)
-            for (k in 1:length(input_item)) {
+            for (k in seq_along(input_item)) {
                 input_item[[k]]=metabolomicsWorkbenchR::input_item[[k]]
             }
         } else {
@@ -733,7 +733,7 @@ setMethod(f = 'do_query',
             
             ## multiple analysis might be returned
             out=list()
-            for (k in 1:length(df)) {
+            for (k in seq_along(df)) {
                 
                 S=do_query('study','study_id',input_value,'summary')
                 
@@ -760,7 +760,10 @@ setMethod(f = 'do_query',
                 # factors
                 SM = do_query('study','study_id',input_value,'factors')[[1]]
                 # merge with data samples in case some are missing
-                SM=merge(data.frame('local_sample_id'=colnames(X)),SM,by='local_sample_id',all=TRUE,sort=FALSE)
+                SM=merge(data.frame('local_sample_id'=colnames(X)),
+                    SM,by='local_sample_id',
+                    all=TRUE,
+                    sort=FALSE)
                 rownames(SM)=SM$local_sample_id
                 
                 M[['subject_type']]=SM$subject_type[1]
@@ -788,12 +791,12 @@ setMethod(f = 'do_query',
             
             X=as.data.frame(t(df))
             
-            SM=as.data.frame(t(X[1:nf,]))
-            X=X[nf+1:nrow(X),]
+            SM=as.data.frame(t(X[seq_len(nf),]))
+            X=X[nf+seq_len(nrow(X)),]
             
             VM=data.frame(metabolite=rownames(X))
             
-            rownames(X)=1:nrow(X)
+            rownames(X)=seq_len(nrow(X))
             
             M = list(
                 'data_source' = 'Metabolomics Workbench',
@@ -853,12 +856,12 @@ setMethod(f = 'do_query',
         
         nf=ncol(fq)-1
         
-        SM=as.data.frame(t(X[1:nf,]))
-        X=X[nf+1:nrow(X),]
+        SM=as.data.frame(t(X[seq_len(nf),]))
+        X=X[nf+seq_len(nrow(X)),]
         
         VM=data.frame(feature_id=rownames(X))
         
-        rownames(X)=1:nrow(X)
+        rownames(X)=seq_len(nrow(X))
         
         M = list(
             'data_source' = 'Metabolomics Workbench (untargeted)',
@@ -964,7 +967,11 @@ setMethod(f = 'do_query',
     definition = function(context,input_item,input_value,output_item) {
         
         # use SE then convert
-        SE = do_query(context$name,input_item$name,input_value,'untarg_SummarizedExperiment')
+        SE = do_query(
+            context$name,
+            input_item$name,
+            input_value,
+            'untarg_SummarizedExperiment')
         DE = as.DatasetExperiment(SE)
         return(DE)
     })
@@ -1008,7 +1015,11 @@ setMethod(f = 'do_query',
         }
         
         # use SE, then convert to DE
-        SE = do_query(context$name,input_item$name,input_value,'SummarizedExperiment')
+        SE = do_query(
+            context$name,
+            input_item$name,
+            input_value,
+            'SummarizedExperiment')
         
         if (is(SE,'SummarizedExperiment')) {
             SE=list(SE)
