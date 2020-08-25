@@ -75,12 +75,10 @@ use character inputs.
 }
 \examples{
 # Get a summary of all studies with "diabetes" in the title
-\donttest{
 df = do_query(
   context = 'study',
   input_item = 'study_title',
   input_value = 'diabetes',
   output_item = 'summary'  
 )
-}
 }

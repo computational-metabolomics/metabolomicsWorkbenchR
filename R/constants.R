@@ -162,7 +162,8 @@ input_item$ignored = mw_input_item(
     pattern = list(
         exact='*',
         partial='*'),
-    example='This is a special input item that is ignored for certain contexts and output items.'
+    example=paste0('This is a special input item that is ignored for certain',
+    ' contexts and output items.')
 )
 output_item$metabolite_info=mw_output_item(
     name='summary',
@@ -566,7 +567,7 @@ output_item$gene_partial=mw_output_item(
     parse_fcn=parse_data_frame
 )
 
-###################################### REFMET ###################################
+##################################### REFMET ###################################
 # some inputs already specified in other contexts
 input_item$name = mw_input_item(
     name = 'name',

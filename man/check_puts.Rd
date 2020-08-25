@@ -18,8 +18,8 @@ check_puts(input_item, output_item)
 TRUE if the items are compatible or throws an error if not.
 }
 \description{
-Checks that the provided inputs and output are compatible. This method is used 
-internally and not for intended for general use.
+Checks that the provided inputs and output are compatible. This method 
+is used internally and not for intended for general use.
 }
 \examples{
 check_puts(input_item$study_id,output_item$summary)

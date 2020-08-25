@@ -29,8 +29,9 @@ TRUE or an error.
 }
 \description{
 Compares the input and output items to the expected values for a context and 
-returns TRUE if the inputs/puts are valid for the provided context or an error 
-if not. This method is used internally and not for intended for general use.
+returns TRUE if the inputs/puts are valid for the provided context or an 
+error if not. This method is used internally and not for intended for general
+use.
 }
 \examples{
 is_valid(context$study,

@@ -21,8 +21,8 @@ mw_base = function(private,locked){
 
 #' Get slot value from mw_base objects
 #' 
-#' Gets the value of a slot from mw_base objects, provided they are not listed as
-#' 'private'.
+#' Gets the value of a slot from mw_base objects, provided they are not listed 
+#' as 'private'.
 #' @param x An object derived from mw_base.
 #' @param name The name of the slot to access.
 #' @return The assigned to the slot.
@@ -44,10 +44,13 @@ setMethod(f = "$",
             return(slot(x,name))
         } else {
             if (!is_slot) {
-                stop(paste0('"',name,'" is not a valid slot for objects of class "', class(x)[1],'"'))
+                stop(paste0('"',name,
+                    '" is not a valid slot for objects of class "', 
+                    class(x)[1],'"'))
             }
             if (is_private) {
-                stop(paste0('"',name,'" is a private slot for internal use only.'))
+                stop(paste0('"',name,
+                    '" is a private slot for internal use only.'))
             }
         }
     }
@@ -97,7 +100,8 @@ setMethod(f = 'is_valid',
     signature = c('mw_context','character','character','character'),
     definition = function(context,input_item,input_value,output_item) {
         
-        name_valid = context@name %in% c('study','compound','refmet','gene','protein','moverz','exactmass')
+        name_valid = context@name %in% c('study','compound','refmet','gene',
+            'protein','moverz','exactmass')
         input_valid = all(input_item %in% context@input_items)
         output_valid = all(output_item %in% context@output_items)
         length_valid = (length(input_value)==length(input_item))
@@ -105,7 +109,8 @@ setMethod(f = 'is_valid',
         
         err=list()
         if (!name_valid) {
-            err=c(err,paste0('name = "',input_item,'" is not a valid context name.\n'))
+            err=c(err,paste0('name = "',input_item,
+                '" is not a valid context name.\n'))
         }
         if (!input_valid) {
             err=c(err,paste0('An input_item is not valid for this context.\n'))
@@ -116,10 +121,12 @@ setMethod(f = 'is_valid',
         }
         
         if (!length_valid) {
-            err=c(err,"Length of input_value must be the same as length of input_item.\n")
+            err=c(err,paste0("Length of input_value must be the same as',
+                ' length of input_item.\n"))
         }
         if (!length_out_valid) {
-            err=c(err,"Length of intput_item is limited to 1 for this context.\n")
+            err=c(err,paste0("Length of intput_item is limited to 1 for',
+                ' this context.\n"))
         }
         
         if (length(err)>0) {
@@ -138,7 +145,8 @@ mw_moverz_context = function(input_items,ion_types,tol_range,mz_range,...) {
         ion_types = ion_types,
         tol_range = tol_range,
         mz_range = mz_range,
-        locked = c('name','input_items','output_items','ion_types','tol_range','mz_range'),
+        locked = c('name','input_items','output_items','ion_types',
+            'tol_range','mz_range'),
         ...
     )    
     return(out)
@@ -163,9 +171,11 @@ setMethod(f = 'is_valid',
         
         input_valid = all(input_item %in% context@input_items)
         
-        range_valid2 = as.numeric(input_value[2]) >= context@mz_range[1] & as.numeric(input_value[2]) <= context@mz_range[2]
+        range_valid2 = as.numeric(input_value[2]) >= context@mz_range[1] & 
+            as.numeric(input_value[2]) <= context@mz_range[2]
         ion_valid = input_value[3] %in% context@ion_types
-        range_valid4 = as.numeric(input_value[4]) >= context@tol_range[1] & as.numeric(input_value[4]) <= context@tol_range[2]
+        range_valid4 = as.numeric(input_value[4]) >= context@tol_range[1] & 
+            as.numeric(input_value[4]) <= context@tol_range[2]
         database_valid=input_value[1] %in% c('LIPIDS','MB','REFMET')
         
         err=list()
@@ -179,10 +189,12 @@ setMethod(f = 'is_valid',
             err=c(err,"input_value[4] is out of range for this context.\n")
         }
         if (!ion_valid) {
-            err=c(err,paste0('"',input_value[3], '" is not a valid ion for this context.\n'))
+            err=c(err,paste0('"',input_value[3], 
+                '" is not a valid ion for this context.\n'))
         }
         if (!database_valid) {
-            err=c(err,paste0('"',input_value[1], '" is not a valid database for this context.\n'))
+            err=c(err,paste0('"',input_value[1], 
+                '" is not a valid database for this context.\n'))
         }
         if (length(err)>0) {
             stop(err)
@@ -198,7 +210,8 @@ mw_exactmass_context = function(ion_types,lipid_types,...) {
         output_items = 'exactmass',
         ion_types = ion_types,
         lipid_types = lipid_types,
-        locked = c('name','input_items','output_items','ion_types','lipid_types'),
+        locked = c('name','input_items','output_items','ion_types',
+            'lipid_types'),
         ...
     )    
     return(out)
@@ -227,10 +240,12 @@ setMethod(f = 'is_valid',
         
         err=list()
         if (!ion_valid) {
-            err=c(err,paste0('"',input_value[2], '" is not a valid ion for this context.\n'))
+            err=c(err,paste0('"',input_value[2], 
+                '" is not a valid ion for this context.\n'))
         }
         if (!lipid_valid) {
-            err=c(err,paste0('"',str[1], '" is not a valid Lipid for this context.\n'))
+            err=c(err,paste0('"',str[1], 
+                '" is not a valid Lipid for this context.\n'))
         }
         if (length(err)>0) {
             stop(err)
@@ -267,9 +282,11 @@ setMethod(f = 'show',
         cat('A Metabolomics Workbench "input_item"\n\n')
         cat('Name:\t"',object@name,'"\n\n',sep='')
         cat('Exact pattern matching:\n')
-        cat(paste0('\t"',object@pattern$exact,'"',collapse='\n'),'\n\n',sep='')
+        cat(paste0('\t"',object@pattern$exact,'"',
+            collapse='\n'),'\n\n',sep='')
         cat('Partial pattern matching:\n')
-        cat(paste0('\t"',object@pattern$partial,'"',collapse='\n'),'\n\n',sep='')
+        cat(paste0('\t"',object@pattern$partial,'"',
+            collapse='\n'),'\n\n',sep='')
         
         if (any(object$example != '')) {
             cat('Examples: \n')
@@ -337,7 +354,8 @@ setMethod(f = 'do_query',
         if (!(all(input_item %in% names(metabolomicsWorkbenchR::input_item)))) {
             stop(paste0('An input_item is not valid.'))
         }
-        if (!(all(output_item %in% names(metabolomicsWorkbenchR::output_item)))) {
+        if (!(all(output_item %in% names(metabolomicsWorkbenchR::output_item))))
+        {
             stop(paste0('An output_item is not valid.'))
         }
         
@@ -386,7 +404,8 @@ setMethod(f = 'do_query',
             } else if (is(x,'character')) {
                 return(x)
             } else {
-                stop('input_item list must only contain characters or mw_input_item objects.')
+                stop(paste0('input_item list must only contain characters',
+                ' or mw_input_item objects.'))
             }
         })
         namez=unlist(namez)
@@ -507,7 +526,8 @@ setMethod(f = 'do_query',
             } else if (is(x,'character')) {
                 return(x)
             } else {
-                stop('input_item list must only contain characters or mw_input_item objects.')
+                stop(paste0('input_item list must only contain characters or',
+                ' mw_input_item objects.'))
             }
         })
         namez=unlist(namez)
@@ -637,7 +657,8 @@ setMethod(f = 'check_pattern',
         pattern = I$pattern[[match]]
         valid = grepl(x=input_value,pattern=pattern)
         if (!valid) {
-            stop(paste0('The input_value does not match the required pattern for the provided input_item and output_item.'))
+            stop(paste0('The input_value does not match the required pattern',
+            ' for the provided input_item and output_item.'))
         } else {
             return(TRUE)
         }
@@ -651,7 +672,8 @@ setMethod(f = 'check_puts',
     definition = function(input_item,output_item) {
         valid = input_item$name %in% output_item$inputs
         if (!valid) {
-            stop(paste0('The input_value is not compatible with the output_item.'))
+            stop(paste0('The input_value is not compatible with the',
+            ' output_item.'))
         } else {
             return(TRUE)
         }
@@ -671,6 +693,11 @@ use_api = function(str,output_item=NULL,input_value=NULL,testing=0) {
         )
     }
     
+    if (httr::http_error(response)) {
+        status=httr::http_status(response)
+        message(status$message)
+        return()
+    }
     
     if (response$headers$`content-type`=="image/png") {
         # do nothing
@@ -719,7 +746,8 @@ setMethod(f = 'do_query',
         err=list()
         # check we have a study context
         if (context$name != 'study') {
-            err=c(err,'SummarizedExperiment output_item can only be used with "study" context')
+            err=c(err,paste0('SummarizedExperiment output_item can only be',
+            'used with "study" context'))
         }
         if(length(err)>0) {
             stop(err)
@@ -911,14 +939,19 @@ setMethod(f = 'do_query',
         err=list()
         # check we have a study context
         if (context$name != 'study') {
-            err=c(err,'DatasetExperiment output_item can only be used with "study" context')
+            err=c(err,paste0('DatasetExperiment output_item can only be used',
+            ' with "study" context'))
         }
         if(length(err)>0) {
             stop(err)
         }
         
         # use SE, then convert to DE
-        SE = do_query(context$name,input_item$name,input_value,'SummarizedExperiment')
+        SE = do_query(
+            context$name,
+            input_item$name,
+            input_value,
+            'SummarizedExperiment')
         
         if (is(SE,'SummarizedExperiment')) {
             DE=as.DatasetExperiment(SE)
@@ -1008,7 +1041,8 @@ setMethod(f = 'do_query',
         err=list()
         # check we have a study context
         if (context$name != 'study') {
-            err=c(err,'MultiAssayExperiment output_item can only be used with "study" context')
+            err=c(err,paste0('MultiAssayExperiment output_item can only be',
+            ' used with "study" context'))
         }
         if(length(err)>0) {
             stop(err)
