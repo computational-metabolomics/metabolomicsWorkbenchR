@@ -21,7 +21,7 @@ Description: This package provides functions for interfacing with the
     MultiAssayExperiment are also included.
 License: GPL-3
 Encoding: UTF-8
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Collate: 
     'parse_fcns.R'
     'generics.R'
