@@ -52,7 +52,8 @@ context = list()
 
 context$study = mw_context(
     name = 'study',
-    input_items = c('study_id','study_title','institute','last_name','analysis_id','metabolite_id'),
+    input_items = c('study_id','study_title','institute','last_name',
+        'analysis_id','metabolite_id'),
     output_items = c('summary','factors','analysis','metabolites','mwtab',
         'source','species','disease','number_of_metabolites','data','datatable',
         'untarg_studies','untarg_factors','untarg_data','metabolite_info',
@@ -61,13 +62,15 @@ context$study = mw_context(
 
 context$compound = mw_context(
     name = 'compound',
-    input_items = c('regno','formula','inchi_key','lm_id','pubchem_cid','hmdb_id','kegg_id','chebi_id','metacyc_id','abbrev'),
+    input_items = c('regno','formula','inchi_key','lm_id','pubchem_cid',
+        'hmdb_id','kegg_id','chebi_id','metacyc_id','abbrev'),
     output_items = c('all','classification','molfile','png','compound_exact')
 )    
 
 context$refmet = mw_context(
     name = 'refmet',
-    input_items = c('match','name','inchi_key','pubchem_cid','formula','main_class','sub_class','super_class'),
+    input_items = c('match','name','inchi_key','pubchem_cid','formula',
+        'main_class','sub_class','super_class'),
     output_items = c('all','ignored','refmet_exact')
 )
 
@@ -79,8 +82,9 @@ context$gene = mw_context(
 
 context$protein = mw_context(
     name = 'protein',
-    input_items = c('mgp_id','gene_id','gene_name','gene_symbol','taxid','mrna_id','refseq_id',
-        'protein_gi','uniprot_id','protein_entry','protein_name'),
+    input_items = c('mgp_id','gene_id','gene_name','gene_symbol','taxid',
+        'mrna_id','refseq_id','protein_gi','uniprot_id','protein_entry',
+        'protein_name'),
     output_items = c('all','protein_exact','protein_partial')
 )
 
@@ -89,16 +93,22 @@ context$moverz = mw_moverz_context(
     mz_range = c(50,2000),
     tol_range = c(0.0001,1),
     ion_types = c('M+H','M+H-H2O','M+2H','M+3H','M+4H','M+K',
-        'M+2K','M+Na','M+2Na','M+Li','M+2Li','M+NH4','M+H+CH3CN','M+Na+CH3CN','M.NaFormate+H',
-        'M.NH4Formate+H','M.CH3','M.TMSi','M.tBuDMSi','M-H','M-H-H2O','M+Na-2H','M+K-2H','M-2H','M-3H','M4H','M.Cl','M.F','M.HF2','M.OAc','M.Formate','M.NaFormate-H','M.NH4Formate-H','Neutral')
+        'M+2K','M+Na','M+2Na','M+Li','M+2Li','M+NH4','M+H+CH3CN','M+Na+CH3CN',
+        'M.NaFormate+H','M.NH4Formate+H','M.CH3','M.TMSi','M.tBuDMSi','M-H',
+        'M-H-H2O','M+Na-2H','M+K-2H','M-2H','M-3H','M4H','M.Cl','M.F','M.HF2',
+        'M.OAc','M.Formate','M.NaFormate-H','M.NH4Formate-H','Neutral')
 )
 
 context$exactmass = mw_exactmass_context(
     ion_types = c('Neutral','M+H','M+H-H2O','M+2H','M+3H',
-        'M+4H','M+K','M+2K','M+2K-H','M+Na','M+2Na','M+2Na-H','M+Li','M+2Li','M+Ag','M+NH4','M-H','M-CH3','M2H','M-3H','M-4H','M.Cl','M.OAc','M.Formate'),
-    lipid_types = c('ArthroCer','asialoGM2Cer','CAR','CE','Cer','CerP','CoA','DG','DGDG','FA','GalCer','GB3Cer','GlcCer','GM3Cer','GM4Cer','iGB3Cer',
-        'LacCer','Lc3Cer','Manb1-4GlcCer','MG','MGDG','MolluCer','PA','PC','PE','PE-Cer','PG','PGP','PI','PI-Cer','PIP','PIP2',
-        'PIP3','PS','SM','SQDG','TG')
+        'M+4H','M+K','M+2K','M+2K-H','M+Na','M+2Na','M+2Na-H','M+Li','M+2Li',
+        'M+Ag','M+NH4','M-H','M-CH3','M2H','M-3H','M-4H','M.Cl','M.OAc',
+        'M.Formate'),
+    lipid_types = c('ArthroCer','asialoGM2Cer','CAR','CE','Cer','CerP','CoA',
+        'DG','DGDG','FA','GalCer','GB3Cer','GlcCer','GM3Cer','GM4Cer','iGB3Cer',
+        'LacCer','Lc3Cer','Manb1-4GlcCer','MG','MGDG','MolluCer','PA','PC','PE',
+        'PE-Cer','PG','PGP','PI','PI-Cer','PIP','PIP2','PIP3','PS','SM','SQDG',
+        'TG')
 )
 
 
@@ -152,7 +162,8 @@ input_item$ignored = mw_input_item(
     pattern = list(
         exact='*',
         partial='*'),
-    example='This is a special input item that is ignored for certain contexts and output items.'
+    example=paste0('This is a special input item that is ignored for certain',
+    ' contexts and output items.')
 )
 output_item$metabolite_info=mw_output_item(
     name='summary',
@@ -166,7 +177,8 @@ output_item$metabolite_info=mw_output_item(
 )
 output_item$number_of_metabolites=mw_output_item(
     name='number_of_metabolites',
-    fields=c('study_id','analysis_id','num_metabolites','analysis_display','study_title'),
+    fields=c('study_id','analysis_id','num_metabolites','analysis_display',
+        'study_title'),
     inputs=c('study_id','study_title','institute','last_name'),
     match='partial',
     parse_fcn=parse_data_frame
@@ -234,7 +246,8 @@ output_item$disease=mw_output_item(
 
 output_item$untarg_studies=mw_output_item(
     name='untarg_studies',
-    fields=c('study_id','analysis_id','analysis_display', 'study_title', 'subject_species', 'institute'),
+    fields=c('study_id','analysis_id','analysis_display', 'study_title',
+        'subject_species', 'institute'),
     inputs=c('study_id'),
     match='partial',
     parse_fcn=parse_data_frame
@@ -250,7 +263,8 @@ output_item$untarg_factors=mw_output_item(
 
 output_item$data=mw_output_item(
     name='data',
-    fields=c('study_id','analysis_id','analysis_summary','metabolite_name','metabolite_id','refmet_name','units','data'),
+    fields=c('study_id','analysis_id','analysis_summary','metabolite_name',
+        'metabolite_id','refmet_name','units','data'),
     inputs=c('study_id'),
     match='exact',
     parse_fcn=parse_data
@@ -390,10 +404,10 @@ input_item$smiles = mw_input_item(
 output_item$compound_exact=mw_output_item(
     name='all',
     fields=c('regno','formula','exactmass','inchi_key','name',
-    'sys_name','smiles','lm_id','pubchem_cid','hmdb_id','kegg_id',
-    'chebi_id','metacyc_id'),
-    inputs=c('regno','formula','inchi_key','smiles','lm_id','pubchem_cid','hmdb_id','kegg_id',
+        'sys_name','smiles','lm_id','pubchem_cid','hmdb_id','kegg_id',
         'chebi_id','metacyc_id'),
+    inputs=c('regno','formula','inchi_key','smiles','lm_id','pubchem_cid',
+        'hmdb_id','kegg_id','chebi_id','metacyc_id'),
     match='exact',
     parse_fcn=parse_data_frame
 )
@@ -404,8 +418,8 @@ output_item$classification=mw_output_item(
         'cf_direct_parent','cf_alternative_parents',
         'lm_category','lm_main_class',
         'lm_sub_class','lm_class_level4'),
-    inputs=c('regno','formula','inchi_key','smiles','lm_id','pubchem_cid','hmdb_id','kegg_id',
-        'chebi_id','metacyc_id'),
+    inputs=c('regno','formula','inchi_key','smiles','lm_id','pubchem_cid',
+        'hmdb_id','kegg_id','chebi_id','metacyc_id'),
     match='exact',
     parse_fcn=parse_data_frame
 )
@@ -413,8 +427,8 @@ output_item$classification=mw_output_item(
 output_item$molfile=mw_output_item(
     name='molfile',
     fields=c(''),
-    inputs=c('regno','formula','inchi_key','smiles','lm_id','pubchem_cid','hmdb_id','kegg_id',
-        'chebi_id','metacyc_id'),
+    inputs=c('regno','formula','inchi_key','smiles','lm_id','pubchem_cid',
+        'hmdb_id','kegg_id','chebi_id','metacyc_id'),
     match='exact',
     parse_fcn=parse_do_nothing
 )
@@ -512,7 +526,7 @@ output_item$protein_exact=mw_output_item(
         'protein_gi','uniprot_id','protein_entry','protein_name','seqlength',
         'seq','is_identical_to'),
     inputs=c('mgp_id','gene_id','gene_name','gene_symbol','taxid','mrna_id',
-    'refseq_id','protein_gi','uniprot_id','protein_entry','protein_name'),
+        'refseq_id','protein_gi','uniprot_id','protein_entry','protein_name'),
     match='exact',
     parse_fcn=parse_data_frame
 )
@@ -553,7 +567,7 @@ output_item$gene_partial=mw_output_item(
     parse_fcn=parse_data_frame
 )
 
-###################################### REFMET ###################################
+##################################### REFMET ###################################
 # some inputs already specified in other contexts
 input_item$name = mw_input_item(
     name = 'name',
@@ -594,8 +608,8 @@ output_item$refmet_exact=mw_output_item(
         'exactmass','formula',
         'main_class','sub_class','super_class'),
     inputs=c('name','pubchem_cid',
-            'inchi_key','formula',
-            'main_class','sub_class','super_class'),
+        'inchi_key','formula',
+        'main_class','sub_class','super_class'),
     match='exact',
     parse_fcn=parse_data_frame
 )
@@ -606,7 +620,7 @@ input_item$database = mw_input_item(
     pattern = list(
         exact = '^((LIPIDS)|(REFMET)|(MB))$',
         partial = '^((LIPIDS)|(REFMET)|(MB))$'
-        )
+    )
 )
 input_item$mz = mw_input_item(
     name = 'mz',
@@ -661,7 +675,8 @@ input_item$exactmass=list(
 
 output_item$exactmass=mw_output_item(
     name='exactmass',
-    fields=c("input_abbrev", "input_ion_type", "exact_mass", "molecular_formula"),
+    fields=c("input_abbrev", "input_ion_type", "exact_mass",
+        "molecular_formula"),
     inputs=c('lipid','ion'),
     match='exact',
     parse_fcn=parse_exactmass

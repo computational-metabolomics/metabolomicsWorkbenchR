@@ -9,10 +9,20 @@
 A Bioconductor package for interfacing with the Metabolomics Workbench API (https://www.metabolomicsworkbench.org/).
 
 ## Installation
-To install from github use the `remotes` package, where `master` can be replaced with release tags if desired:
+To install this package, start R (version "4.0") and enter:
+
+```{r}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("metabolomicsWorkbenchR")
+```
+
+Alternatively, to install from github use the `remotes` package, where `@master` can be replaced with release tags if desired:
 ```{r}
 remotes::install_github('computational-metabolomics/metabolomicsWorkbenchR@master')
 ```
+
 
 ## Introduction
 This package enables access to the Metabolomics Workbench API (MWA) using a simple query interface. For example, the 'study' context can be queried using the 'study_title' input to search the database for all studies with the keyword 'Diabetes' in the title and return a summary:

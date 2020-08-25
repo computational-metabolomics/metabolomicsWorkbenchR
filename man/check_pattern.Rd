@@ -21,7 +21,8 @@ TRUE if input matches the pattern, or throws an error.
 }
 \description{
 Checks an input_value against a regex pattern to determine if the input_value
-is valid. This method is used internally and not for intended for general use.
+is valid. This method is used internally and not for intended for 
+general use.
 }
 \examples{
 check_pattern(input_item$study_id,'ST000001','exact')

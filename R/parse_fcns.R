@@ -35,7 +35,7 @@ parse_data_frame=function(response,output_item,input_value) {
 }
 
 parse_factors=function(response,output_item,input_value) {
-
+    
     # parse output to data.frame
     out_orig = parse_data_frame(response,output_item,input_value)
     
@@ -48,7 +48,8 @@ parse_factors=function(response,output_item,input_value) {
         out=out_orig[out_orig$study_id==id,,drop=FALSE]
         
         # expand factors
-        m=as.data.frame(matrix(NA,nrow=nrow(out),ncol=20)) # assume no more than 20 factors for a study
+        # assume no more than 20 factors for a study
+        m=as.data.frame(matrix(NA,nrow=nrow(out),ncol=20)) 
         
         for (k in seq(from=1,to=nrow(out))) {
             
@@ -101,8 +102,8 @@ parse_untarg_factors=function(response,output_item,input_value) {
     # add the factors into back into the table
     w=which(colnames(df)=='group')
     # exclude group
-    df=cbind(df[1:max(w-1,1)],m,df[min((w+1),ncol(df)):ncol(df)])
-    rownames(df)=1:nrow(df)
+    df=cbind(df[seq_len(max(w-1,1))],m,df[min((w+1),ncol(df)):ncol(df)])
+    rownames(df)=seq_len(nrow(df))
     df$group=NULL
     return(df)
 }
@@ -141,7 +142,12 @@ parse_data=function(response,output_item,input_value) {
 
 parse_untarg_data=function(response,output_item,input_value) {
     out=httr::content(response,as='text',encoding = 'UTF-8')
-    out=read.table(text=out,sep='\t',header = TRUE,row.names = 1,check.names = FALSE)
+    out=read.table(
+        text=out,
+        sep='\t',
+        header = TRUE,
+        row.names = 1,
+        check.names = FALSE)
     
     # split the group column at the pipe to get factors
     m = create_factor_columns(out,'group')
@@ -149,7 +155,7 @@ parse_untarg_data=function(response,output_item,input_value) {
     # add the factors into back into the table
     w=which(colnames(out)=='group')
     # exclude group
-    out=cbind(out[1:(w-1)],m,out[(w+1):ncol(out)])
+    out=cbind(out[seq_len(w-1)],m,out[(w+1):ncol(out)])
     
     out$group=NULL
     return(out)
@@ -158,7 +164,12 @@ parse_untarg_data=function(response,output_item,input_value) {
 parse_datatable=function(response,output_item,input_value) {
     
     out=httr::content(response,as='text',encoding = 'UTF-8')
-    out=read.delim(text=out,sep='\t',row.names = 1,header = TRUE,check.names = FALSE)
+    out=read.delim(
+        text=out,
+        sep='\t',
+        row.names = 1,
+        header = TRUE,
+        check.names = FALSE)
     
     # split the group column at the pipe to get factors
     m = create_factor_columns(out,'Class')
@@ -166,7 +177,7 @@ parse_datatable=function(response,output_item,input_value) {
     # add the factors into back into the table
     w=which(colnames(out)=='Class')
     # exclude group
-    out=cbind(out[1:(w-1)],m,out[(w+1):ncol(out)])
+    out=cbind(out[seq_len(w-1)],m,out[(w+1):ncol(out)])
     out$Class=NULL
     attributes(out)=c(attributes(out),list('number_of_factors'=ncol(m)))
     
@@ -182,8 +193,10 @@ create_factor_columns = function(out,fn) {
     m=lapply(at_pipe,function(x){
         at_colon=strsplit(x,':',fixed=TRUE)
         m=matrix(NA,nrow=1,ncol=length(at_colon))
-        n=matrix(interaction('V',1:length(at_colon),sep=''),nrow=1,ncol=ncol(m))
-        for (j in 1:length(at_colon)) {
+        n=matrix(interaction('V',seq_along(at_colon),sep=''),
+            nrow=1,
+            ncol=ncol(m))
+        for (j in seq_along(at_colon)) {
             m[1,j]=trimws(at_colon[[j]][length(at_colon[[j]])])
             if (length(at_colon[[j]])==2) {
                 n[1,j]=trimws(at_colon[[j]][1])
@@ -220,10 +233,12 @@ parse_moverz=function(response,output_item,input_value) {
         found=regmatches(out2,info)[[1]]
         replace=unlist(lapply(found,function(x){
             n=nchar(x)
-            x=paste0(c(substr(x,1,n-5),paste0('0',substr(x,n-4,n))),collapse='\t')
+            x=paste0(
+                c(substr(x,1,n-5),paste0('0',substr(x,n-4,n))),
+                collapse='\t')
         }))
         # for each match
-        for (k in 1:length(found)) {
+        for (k in seq_along(found)) {
             out2=sub(pattern = found[k],replacement = replace[k],x=out2)
         }
     } else if (input_value[[1]]=='REFMET'){
