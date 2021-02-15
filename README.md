@@ -1,6 +1,6 @@
 
 <!-- badges: start -->
-[![Build Status](https://github.com/computational-metabolomics/structToolbox/workflows/structToolbox/badge.svg)](https://github.com/computational-metabolomics/structToolbox/actions)
+[![Build Status](https://github.com/computational-metabolomics/metabolomicsWorkbenchR/workflows/metabolomicsWorkbenchR/badge.svg)](https://github.com/computational-metabolomics/metabolomicsWorkbenchR/actions)
 [![Codecov test coverage](https://codecov.io/gh/computational-metabolomics/metabolomicsWorkbenchR/branch/master/graph/badge.svg)](https://codecov.io/gh/computational-metabolomics/metabolomicsWorkbenchR?branch=master)
 <!-- badges: end -->
 
