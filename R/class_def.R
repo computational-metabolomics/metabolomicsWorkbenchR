@@ -879,15 +879,13 @@ setMethod(f = 'do_query',
         df = do_query(context$name,input_item$name,input_value,'untarg_data')
         fq = do_query('study','analysis_id',input_value,'untarg_factors')
         
-        nf=ncol(fq)-1
-        
-        SM=as.data.frame(df[,seq_len(nf)])
-        df=df[,nf+seq_len(nrow(df))]
+        fq=fq[,-1]
+
+        SM=as.data.frame(df[,colnames(fq)])
+        df[,colnames(fq)]=NULL
         
         df=as.data.frame(t(df))
         VM=data.frame(feature_id=rownames(df))
-        
-        rownames(df)=seq_len(nrow(df))
         
         M = list(
             'data_source' = 'Metabolomics Workbench (untargeted)',

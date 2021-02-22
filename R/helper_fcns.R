@@ -43,7 +43,12 @@ context_outputs = function(context) {
             'names(context) for a list of valid contexts'))
     }
     
-    return(metabolomicsWorkbenchR::context[[context]]$output_items)
+    x=metabolomicsWorkbenchR::context[[context]]$output_items
+    w=which(x=='all')
+    if (length(w)>0){
+        x=x[-w]
+    }
+    return(x)
 }
 
 #' Valid input_value for input_item
