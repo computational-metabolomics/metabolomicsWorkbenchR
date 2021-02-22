@@ -45,7 +45,10 @@ Suggests:
     HDF5Array,
     rmarkdown,
     structToolbox,
-    testthat
+    testthat,
+    pmp,
+    grid,
+    png
 VignetteBuilder: 
     knitr
 biocViews: Software, Metabolomics

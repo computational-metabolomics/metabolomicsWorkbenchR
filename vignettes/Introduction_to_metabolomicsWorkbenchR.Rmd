@@ -22,6 +22,7 @@ vignette: >
 
 ```{r echo = FALSE,include=FALSE}
 suppressPackageStartupMessages(library(metabolomicsWorkbenchR))
+library(grid)
 ```
 
 
@@ -89,6 +90,19 @@ df = do_query(
 
 df[,1:3]
 ```
+We can also request an image of the molecular structure:
+
+```{r}
+img = do_query(
+        context = 'compound',
+        input_item = 'regno',
+        input_value = '11',
+        output_item = 'png'
+      )
+
+grid.raster(img)
+
+```
 
 Valid contexts, input items and output items can be listed using the `names` function:
 
@@ -97,8 +111,12 @@ Valid contexts, input items and output items can be listed using the `names` fun
 names(context) # context, input_item or output_item
 ```
 
-Valid inputs and outputs for a context can be displayed by accessing the list of context objects. Valid inputs for a particular output can also be displayed by accessing the list of output item objects. Use of `metabolmicsWorkbenchR` objects is detailed in a later section.
+Valid inputs and outputs for a context can be displayed by accessing the list of context objects. Valid inputs for a particular output can also be displayed by accessing the list of output item objects. Use of `metabolmicsWorkbenchR` objects is detailed in a later section. In addition, functions `context_inputs`, `context_outputs` and `input_example` are provided for convenience.
 
+```{r}
+# valid inputs for "study" context
+context_inputs('study')
+```
 More information about the different contexts can be found in the API documentation
 [(link)](https://www.metabolomicsworkbench.org/tools/MWRestAPIv1.0.pdf)
 
@@ -120,7 +138,7 @@ df[1:3,1:3]
 ```
 
 ## `output_item` "compound_exact", "protein_exact" and "gene_exact"
-These outputs refer to compound, protein and gene context API outputs that can be used with exact matching. This means that only exact matches to the input_value will be returned. For these outputs all available output fields will be returned.
+These outputs refer to compound, protein and gene context API outputs that can be used with exact matching. This means that only exact matches to the input_value will be returned. For these outputs all available output fields will be returned. These output items are used in place of the 'all' item specified in the API documentation.
 
 ```{r}
 df = do_query(
@@ -134,7 +152,7 @@ df[,1:3]
 ```
 
 ## `output_item` "protein_partial" and "gene_partial"
-These outputs refer to protein and gene contexts API outputs that can be used with partial matching. This means that all records with a partial match to the input_value will be returned. For these outputs all available output fields will be returned.
+These outputs refer to protein and gene contexts API outputs that can be used with partial matching. This means that all records with a partial match to the input_value will be returned. For these outputs all available output fields will be returned. 
 
 ```{r}
 df = do_query(
