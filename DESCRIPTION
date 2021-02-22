@@ -27,6 +27,7 @@ Collate:
     'generics.R'
     'class_def.R'
     'constants.R'
+    'helper_fcns.R'
     'metabolomicsWorkbenchR.R'
 Imports: 
     data.table,

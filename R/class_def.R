@@ -93,7 +93,6 @@ setMethod(f = 'show',
     }
 )
 
-
 #' @rdname is_valid
 #' @export
 setMethod(f = 'is_valid',
