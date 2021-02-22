@@ -155,7 +155,7 @@ parse_untarg_data=function(response,output_item,input_value) {
     # add the factors into back into the table
     w=which(colnames(out)=='group')
     # exclude group
-    out=cbind(out[seq_len(w-1)],m,out[(w+1):ncol(out)])
+    out=cbind(out[seq_len(w-1)],m,as.numeric(out[(w+1):ncol(out)]))
     
     out$group=NULL
     return(out)
@@ -177,7 +177,7 @@ parse_datatable=function(response,output_item,input_value) {
     # add the factors into back into the table
     w=which(colnames(out)=='Class')
     # exclude group
-    out=cbind(out[seq_len(w-1)],m,out[(w+1):ncol(out)])
+    out=cbind(out[seq_len(w-1)],m,as.numeric(out[(w+1):ncol(out)]))
     out$Class=NULL
     attributes(out)=c(attributes(out),list('number_of_factors'=ncol(m)))
     
