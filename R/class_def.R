@@ -879,16 +879,15 @@ setMethod(f = 'do_query',
         df = do_query(context$name,input_item$name,input_value,'untarg_data')
         fq = do_query('study','analysis_id',input_value,'untarg_factors')
         
-        X=as.data.frame(t(df))
-        
         nf=ncol(fq)-1
         
-        SM=as.data.frame(t(X[seq_len(nf),]))
-        X=X[nf+seq_len(nrow(X)),]
+        SM=as.data.frame(df[,seq_len(nf)])
+        df=df[,nf+seq_len(nrow(df))]
         
-        VM=data.frame(feature_id=rownames(X))
+        df=as.data.frame(t(df))
+        VM=data.frame(feature_id=rownames(df))
         
-        rownames(X)=seq_len(nrow(X))
+        rownames(df)=seq_len(nrow(df))
         
         M = list(
             'data_source' = 'Metabolomics Workbench (untargeted)',
@@ -896,7 +895,7 @@ setMethod(f = 'do_query',
         )
         
         SE = SummarizedExperiment(
-            assays = X,
+            assays = df,
             rowData = VM,
             colData = SM,
             metadata = M
