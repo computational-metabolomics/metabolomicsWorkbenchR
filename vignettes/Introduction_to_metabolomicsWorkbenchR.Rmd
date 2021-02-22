@@ -1,5 +1,5 @@
 ---
-title: "Introduction_to_metabolomicsWorkbenchR"
+title: "Introduction to `metabolomicsWorkbenchR`"
 author:
 - name: Gavin R Lloyd
   affiliation: Phenome Centre Birmingham, University of Birmingham, UK
