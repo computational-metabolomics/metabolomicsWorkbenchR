@@ -44,9 +44,5 @@ doc
 Meta
 
 # yaml
-*.yml
 *.Rproj
-*.yml
-.travis.yml
-codecov.yml
-appveyor.yml
+
