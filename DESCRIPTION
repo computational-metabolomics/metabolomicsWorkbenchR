@@ -43,6 +43,7 @@ Suggests:
     covr,
     knitr,
     rmarkdown,
+    structToolbox,
     testthat
 VignetteBuilder: 
     knitr

@@ -1,0 +1,82 @@
+---
+title: "Example using structToolbox"
+author:
+- name: Gavin R Lloyd
+  affiliation: Phenome Centre Birmingham, University of Birmingham, UK
+  email: g.r.lloyd@bham.ac.uk
+- name: Ralf J Weber
+  affiliation: Phenome Centre Birmingham, University of Birmingham, UK
+  email: r.j.weber@bham.ac.uk
+output:
+  BiocStyle::html_document:
+    toc: yes
+    toc_depth: 2
+    number_sections: yes
+    toc_float: yes
+package: metabolomicsWorkbenchR
+vignette: >
+  %\VignetteIndexEntry{Example using structToolbox} 
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r echo = FALSE,include=FALSE}
+suppressPackageStartupMessages(library(metabolomicsWorkbenchR))
+```
+
+
+# Introduction
+Metabolomics Workbench [(link)](www.metabolomicsworkbench.org) hosts a metabolomics 
+data repository. It contains over 1000 publicly available studies including raw data, 
+processed data and metabolite/compound information.
+
+The repository is searchable using a REST service API. The metabolomicsWorkbenchR
+package makes the endpoints of this service available in R and provides functionality
+to search the database and import datasets and metabolite information into commonly used 
+formats such as data frames and SummarizedExperiment objects.
+
+In this vigenette we will use `metabolomicsWorkbenchR` to retrieve the uploaded peak matrix
+for a study. We will then use `structToolbox` to apply a basic workflow to analyse the data.
+
+# Installation
+To install this package enter:
+```
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("metabolomicsWorkbenchR")
+```
+For older versions, please refer to the appropriate Bioconductor release.
+
+# Querying the database
+The API endpoints for Metabolomics Workbench are accessible using the `do_query`
+function in `metabolomicsWorkBenchR`.
+
+The `do_query` functions takes 4 inputs:
+- `context`       A valid context name (character)
+- `input_item`    A valid input_item name (character)
+- `input_value`   A valid input_value name (character)
+- `output_item`   A valid output_item (character)
+
+Contexts refer to the different database searches available in the API. The reader 
+is referred to the API manual for details of each context 
+[(link)](https://www.metabolomicsworkbench.org/tools/mw_rest.php). 
+In `metabolomicsWorkBenchR` contexts are stored as a list, and a list of valid 
+contexts can be obtained using the `names` function:
+
+```{r}
+names(context)
+```
+
+`input_item`s are specific to a context. 
+
+
+
+
+
+
+
+
+
+
+
