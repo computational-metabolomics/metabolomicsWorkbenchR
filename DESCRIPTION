@@ -42,6 +42,7 @@ Suggests:
     BiocStyle,
     covr,
     knitr,
+    HDF5Array,
     rmarkdown,
     structToolbox,
     testthat
