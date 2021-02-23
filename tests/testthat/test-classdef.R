@@ -6,7 +6,8 @@ test_that("context creation works as expected", {
         output_items = c('summary','factors','analysis','metabolites','mwtab',
             'source','species','disease','number_of_metabolites','data','datatable',
             'untarg_studies','untarg_factors','untarg_data','metabolite_info',
-            'SummarizedExperiment')
+            'SummarizedExperiment','untarg_SummarizedExperiment',
+            'DatasetExperiment','untarg_DatasetExperiment')
     )
     
     expect_equal(study,context$study)

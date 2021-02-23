@@ -93,7 +93,6 @@ setMethod(f = 'show',
     }
 )
 
-
 #' @rdname is_valid
 #' @export
 setMethod(f = 'is_valid',
@@ -880,16 +879,13 @@ setMethod(f = 'do_query',
         df = do_query(context$name,input_item$name,input_value,'untarg_data')
         fq = do_query('study','analysis_id',input_value,'untarg_factors')
         
-        X=as.data.frame(t(df))
+        fq=fq[,-1]
+
+        SM=as.data.frame(df[,colnames(fq)])
+        df[,colnames(fq)]=NULL
         
-        nf=ncol(fq)-1
-        
-        SM=as.data.frame(t(X[seq_len(nf),]))
-        X=X[nf+seq_len(nrow(X)),]
-        
-        VM=data.frame(feature_id=rownames(X))
-        
-        rownames(X)=seq_len(nrow(X))
+        df=as.data.frame(t(df))
+        VM=data.frame(feature_id=rownames(df))
         
         M = list(
             'data_source' = 'Metabolomics Workbench (untargeted)',
@@ -897,7 +893,7 @@ setMethod(f = 'do_query',
         )
         
         SE = SummarizedExperiment(
-            assays = X,
+            assays = df,
             rowData = VM,
             colData = SM,
             metadata = M

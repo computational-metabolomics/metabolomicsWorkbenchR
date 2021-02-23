@@ -27,6 +27,7 @@ Collate:
     'generics.R'
     'class_def.R'
     'constants.R'
+    'helper_fcns.R'
     'metabolomicsWorkbenchR.R'
 Imports: 
     data.table,
@@ -41,8 +42,13 @@ Suggests:
     BiocStyle,
     covr,
     knitr,
+    HDF5Array,
     rmarkdown,
-    testthat
+    structToolbox,
+    testthat,
+    pmp,
+    grid,
+    png
 VignetteBuilder: 
     knitr
 biocViews: Software, Metabolomics

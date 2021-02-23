@@ -1,0 +1,151 @@
+---
+title: "Example using structToolbox"
+author:
+- name: Gavin R Lloyd
+  affiliation: Phenome Centre Birmingham, University of Birmingham, UK
+  email: g.r.lloyd@bham.ac.uk
+- name: Ralf J Weber
+  affiliation: Phenome Centre Birmingham, University of Birmingham, UK
+  email: r.j.weber@bham.ac.uk
+output:
+  BiocStyle::html_document:
+    toc: yes
+    toc_depth: 2
+    number_sections: yes
+    toc_float: yes
+package: metabolomicsWorkbenchR
+vignette: >
+  %\VignetteIndexEntry{Example using structToolbox} 
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r echo = FALSE,include=FALSE}
+suppressPackageStartupMessages(library(metabolomicsWorkbenchR))
+library(structToolbox)
+```
+
+
+# Introduction
+Metabolomics Workbench [(link)](www.metabolomicsworkbench.org) hosts a metabolomics 
+data repository. It contains over 1000 publicly available studies including raw data, 
+processed data and metabolite/compound information.
+
+The repository is searchable using a REST service API. The metabolomicsWorkbenchR
+package makes the endpoints of this service available in R and provides functionality
+to search the database and import datasets and metabolite information into commonly used 
+formats such as data frames and SummarizedExperiment objects.
+
+In this vigenette we will use `metabolomicsWorkbenchR` to retrieve the uploaded peak matrix
+for a study. We will then use `structToolbox` to apply a basic workflow to analyse the data.
+
+# Installation
+To install this package enter:
+```
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("metabolomicsWorkbenchR")
+```
+For older versions, please refer to the appropriate Bioconductor release.
+
+# Querying the database
+The API endpoints for Metabolomics Workbench are accessible using the `do_query`
+function in `metabolomicsWorkBenchR`.
+
+The `do_query` functions takes 4 inputs:
+- `context`       A valid context name (character)
+- `input_item`    A valid input_item name (character)
+- `input_value`   A valid input_value name (character)
+- `output_item`   A valid output_item (character)
+
+Contexts refer to the different database searches available in the API. The reader 
+is referred to the API manual for details of each context 
+[(link)](https://www.metabolomicsworkbench.org/tools/mw_rest.php). 
+In `metabolomicsWorkBenchR` contexts are stored as a list, and a list of valid 
+contexts can be obtained using the `names` function:
+
+```{r}
+names(context)
+```
+
+`input_item` is specific to a context. Valid items for a context can
+be listed using `context_inputs` function:
+
+```{r}
+cat('Valid inputs:\n')
+context_inputs('study')
+cat('\nValid outputs:\n')
+context_outputs('study')
+```
+
+# Choosing a study
+First we query the database to return a list of untargeted studies. We use the 
+"study" context in combination with a special case input item called "ignored" 
+that is required for the "untarg_studies" output item.
+
+```{r}
+US = do_query(
+  context = 'study',
+  input_item = 'ignored',
+  input_value = 'ignored',
+  output_item = 'untarg_studies'
+)
+
+head(US[,1:3])
+```
+
+We will pull data for study "ST000009". We can obtain summary information using
+the "summary" output item.
+
+```{r}
+S = do_query('study','study_id','ST000010','summary')
+t(S)
+```
+
+As there are multiple datasets per study untargeted data needs to be requested 
+by Analysis ID. We will request DatasetExperiment format so that we can use the 
+data directly with `structToolbox`.
+
+```{r}
+DE = do_query(
+  context = 'study',
+  input_item = 'analysis_id',
+  input_value = 'AN000025',
+  output_item = 'untarg_DatasetExperiment'
+)
+DE
+
+```
+# Workflow
+Now we construct a minimal metabolomics workflow consisting of quality filtering,
+normalisation, imputation and scaling before applying PCA.
+
+```{r}
+# model sequence
+M = 
+    mv_feature_filter(
+      threshold = 40,
+      method='across',
+      factor_name='FCS') +
+    mv_sample_filter(mv_threshold =40) +
+    vec_norm() +
+    knn_impute() +
+    log_transform() + 
+    mean_centre() + 
+    PCA()
+# apply model
+M = model_apply(M,DE)
+
+# pca scores plot
+C = pca_scores_plot(factor_name=c('FCS'))
+chart_plot(C,M[length(M)])
+```
+
+
+
+
+
+
+
+
