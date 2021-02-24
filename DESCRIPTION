@@ -1,7 +1,7 @@
 Package: metabolomicsWorkbenchR
 Type: Package
 Title: Metabolomics Workbench in R
-Version: 1.1.0
+Version: 1.1.1
 Authors@R: c(
     person(
         c("Gavin","Rhys"),
