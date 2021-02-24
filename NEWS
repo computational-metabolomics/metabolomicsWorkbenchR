@@ -1,2 +1,9 @@
+Changes in 1.1.1
++ bug fixes
++ added some helper functions
+
+Changes in 1.0.0
++ Bioconductor release 3.12
+
 Changes in 0.99.0
 + Bioconductor submission
