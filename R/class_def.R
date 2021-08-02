@@ -1,6 +1,6 @@
 #' @include generics.R parse_fcns.R
 #' @import methods
-#' @import utils
+#' @importFrom utils read.delim read.table
 
 ############################## BASE ##########################################
 mw_base = function(private,locked){
