@@ -33,12 +33,14 @@ setGeneric("is_valid",
 #' @return A data.frame, or other output appropriate to the output_item.
 #' @examples
 #' # Get a summary of all studies with "diabetes" in the title
+#'\donttest{
 #' df = do_query(
 #'   context = 'study',
 #'   input_item = 'study_title',
 #'   input_value = 'diabetes',
 #'   output_item = 'summary'  
 #' )
+#' }
 #' @rdname do_query
 #' @export
 setGeneric("do_query",
