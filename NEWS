@@ -1,3 +1,6 @@
+Changes in 1.11.1
++ use httptest to cache responses when building vignette
+
 Changes in 1.1.1
 + bug fixes
 + added some helper functions
