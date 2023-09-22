@@ -21,9 +21,9 @@ vignette: >
 ---
 
 ```{r echo = FALSE,include=FALSE}
+suppressPackageStartupMessages(library(structToolbox))
+suppressPackageStartupMessages(library(httptest))
 suppressPackageStartupMessages(library(metabolomicsWorkbenchR))
-library(structToolbox)
-library(httptest)
 httptest::start_vignette('structToolbox_example')
 ```
 
@@ -144,8 +144,14 @@ C = pca_scores_plot(factor_name=c('FCS'))
 chart_plot(C,M[length(M)])
 ```
 
+# Session Info
+```{r,echo=FALSE}
+sessionInfo()
+```
 
-
+```{r, include=FALSE}
+end_vignette()
+```
 
 
 

@@ -262,3 +262,7 @@ output_item$summary
 ```{r,echo=FALSE}
 sessionInfo()
 ```
+
+```{r, include=FALSE}
+end_vignette()
+```
