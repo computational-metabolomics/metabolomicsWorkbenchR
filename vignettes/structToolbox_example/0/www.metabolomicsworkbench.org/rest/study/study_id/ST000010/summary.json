@@ -1,0 +1,14 @@
+{
+    "study_id": "ST000010",
+    "study_title": "Lung Cancer Cells 4",
+    "study_type": "MS analysis (Untargeted)",
+    "institute": "University of Michigan",
+    "department": "",
+    "last_name": "Keshamouni",
+    "first_name": "Venkat",
+    "email": "vkeshamo@umich.edu",
+    "phone": "",
+    "submit_date": "2013-04-03",
+    "study_summary": "In cancer cells, the process of epithelial–mesenchymal transition (EMT) confers migratory and invasive capacity, resistance to apoptosis, drug resistance, evasion of host immune surveillance and tumor stem cell traits. Cells undergoing EMT may represent tumor cells with metastatic potential. Characterizing the EMT secretome may identify biomarkers to monitor EMT in tumor progression and provide a prognostic signature to predict patient survival. Utilizing a transforming growth factor-β-induced cell culture model of EMT, we quantitatively profiled differentially secreted proteins, by GeLC-tandem mass spectrometry. Integrating with the corresponding transcriptome, we derived an EMT-associated secretory phenotype (EASP) comprising of proteins that were differentially upregulated both at protein and mRNA levels. Four independent primary tumor-derived gene expression data sets of lung cancers were used for survival analysis by the random survival forests (RSF) method. Analysis of 97-gene EASP expression in human lung adenocarcinoma tumors revealed strong positive correlations with lymph node metastasis, advanced tumor stage and histological grade. RSF analysis built on a training set (n = 442), including age, sex and stage as variables, stratified three independent lung cancer data sets into low-, medium- and high-risk groups with significant differences in overall survival. We further refined EASP to a 20 gene signature (rEASP) based on variable importance scores from RSF analysis. Similar to EASP, rEASP predicted survival of both adenocarcinoma and squamous carcinoma patients. More importantly, it predicted survival in the early-stage cancers. These results demonstrate that integrative analysis of the critical biological process of EMT provides mechanism-based and clinically relevant biomarkers with significant prognostic value.\nResearch is published, core data not used but project description is relevant:\nhttp://www.jimmunol.org/content/194/12/5789.long\n",
+    "subject_species": "Homo sapiens"
+}

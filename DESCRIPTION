@@ -1,7 +1,7 @@
 Package: metabolomicsWorkbenchR
 Type: Package
 Title: Metabolomics Workbench in R
-Version: 1.7.0
+Version: 1.7.1
 Authors@R: c(
     person(
         c("Gavin","Rhys"),
@@ -43,6 +43,7 @@ Suggests:
     covr,
     knitr,
     HDF5Array,
+    httptest,
     rmarkdown,
     structToolbox,
     testthat,

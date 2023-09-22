@@ -1,0 +1,686 @@
+{
+    "1": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008880",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:12MO | SURGERY:GASTRIC_BAND"
+    },
+    "2": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008886",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:12MO | SURGERY:GASTRIC_BAND"
+    },
+    "3": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008938",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:12MO | SURGERY:GASTRIC_BAND"
+    },
+    "4": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008868",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:12MO | SURGERY:ROUX_EN_Y"
+    },
+    "5": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008874",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:6MO | SURGERY:GASTRIC_BAND"
+    },
+    "6": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008946",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:6MO | SURGERY:GASTRIC_BAND"
+    },
+    "7": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008950",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:6MO | SURGERY:GASTRIC_BAND"
+    },
+    "8": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008974",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:6MO | SURGERY:GASTRIC_BAND"
+    },
+    "9": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008904",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:6MO | SURGERY:ROUX_EN_Y"
+    },
+    "10": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008910",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:6MO | SURGERY:ROUX_EN_Y"
+    },
+    "11": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008922",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:6MO | SURGERY:ROUX_EN_Y"
+    },
+    "12": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008928",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:6MO | SURGERY:ROUX_EN_Y"
+    },
+    "13": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008934",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:6MO | SURGERY:ROUX_EN_Y"
+    },
+    "14": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008954",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:6MO | SURGERY:ROUX_EN_Y"
+    },
+    "15": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008958",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:6MO | SURGERY:ROUX_EN_Y"
+    },
+    "16": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008962",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:6MO | SURGERY:ROUX_EN_Y"
+    },
+    "17": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008966",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:6MO | SURGERY:ROUX_EN_Y"
+    },
+    "18": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008970",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:6MO | SURGERY:ROUX_EN_Y"
+    },
+    "19": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008978",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:6MO | SURGERY:ROUX_EN_Y"
+    },
+    "20": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008870",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:NO_SURGERY | SURGERY:LEAN_CONTROL"
+    },
+    "21": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008876",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:NO_SURGERY | SURGERY:LEAN_CONTROL"
+    },
+    "22": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008882",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:NO_SURGERY | SURGERY:LEAN_CONTROL"
+    },
+    "23": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008900",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:NO_SURGERY | SURGERY:LEAN_CONTROL"
+    },
+    "24": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008912",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:NO_SURGERY | SURGERY:LEAN_CONTROL"
+    },
+    "25": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008918",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:NO_SURGERY | SURGERY:LEAN_CONTROL"
+    },
+    "26": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008924",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:NO_SURGERY | SURGERY:LEAN_CONTROL"
+    },
+    "27": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008872",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:GASTRIC_BAND"
+    },
+    "28": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008878",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:GASTRIC_BAND"
+    },
+    "29": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008884",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:GASTRIC_BAND"
+    },
+    "30": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008936",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:GASTRIC_BAND"
+    },
+    "31": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008944",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:GASTRIC_BAND"
+    },
+    "32": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008948",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:GASTRIC_BAND"
+    },
+    "33": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008972",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:GASTRIC_BAND"
+    },
+    "34": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008866",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:ROUX_EN_Y"
+    },
+    "35": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008902",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:ROUX_EN_Y"
+    },
+    "36": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008908",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:ROUX_EN_Y"
+    },
+    "37": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008920",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:ROUX_EN_Y"
+    },
+    "38": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008926",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:ROUX_EN_Y"
+    },
+    "39": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008932",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:ROUX_EN_Y"
+    },
+    "40": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008952",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:ROUX_EN_Y"
+    },
+    "41": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008956",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:ROUX_EN_Y"
+    },
+    "42": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008960",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:ROUX_EN_Y"
+    },
+    "43": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008964",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:ROUX_EN_Y"
+    },
+    "44": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008968",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:ROUX_EN_Y"
+    },
+    "45": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008976",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:ROUX_EN_Y"
+    },
+    "46": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008892",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:male | POST_SURGERY_TIME:12MO | SURGERY:GASTRIC_BAND"
+    },
+    "47": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008898",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:male | POST_SURGERY_TIME:12MO | SURGERY:GASTRIC_BAND"
+    },
+    "48": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008916",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:male | POST_SURGERY_TIME:6MO | SURGERY:ROUX_EN_Y"
+    },
+    "49": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008942",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:male | POST_SURGERY_TIME:6MO | SURGERY:ROUX_EN_Y"
+    },
+    "50": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008888",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:male | POST_SURGERY_TIME:NO_SURGERY | SURGERY:LEAN_CONTROL"
+    },
+    "51": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008894",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:male | POST_SURGERY_TIME:NO_SURGERY | SURGERY:LEAN_CONTROL"
+    },
+    "52": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008906",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:male | POST_SURGERY_TIME:NO_SURGERY | SURGERY:LEAN_CONTROL"
+    },
+    "53": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008930",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:male | POST_SURGERY_TIME:NO_SURGERY | SURGERY:LEAN_CONTROL"
+    },
+    "54": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008890",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:male | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:GASTRIC_BAND"
+    },
+    "55": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008896",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:male | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:GASTRIC_BAND"
+    },
+    "56": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008914",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:male | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:ROUX_EN_Y"
+    },
+    "57": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008940",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:30_MIN | gender:male | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:ROUX_EN_Y"
+    },
+    "58": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008879",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:12MO | SURGERY:GASTRIC_BAND"
+    },
+    "59": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008885",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:12MO | SURGERY:GASTRIC_BAND"
+    },
+    "60": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008937",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:12MO | SURGERY:GASTRIC_BAND"
+    },
+    "61": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008867",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:12MO | SURGERY:ROUX_EN_Y"
+    },
+    "62": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008873",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:6MO | SURGERY:GASTRIC_BAND"
+    },
+    "63": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008945",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:6MO | SURGERY:GASTRIC_BAND"
+    },
+    "64": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008949",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:6MO | SURGERY:GASTRIC_BAND"
+    },
+    "65": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008973",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:6MO | SURGERY:GASTRIC_BAND"
+    },
+    "66": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008903",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:6MO | SURGERY:ROUX_EN_Y"
+    },
+    "67": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008909",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:6MO | SURGERY:ROUX_EN_Y"
+    },
+    "68": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008921",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:6MO | SURGERY:ROUX_EN_Y"
+    },
+    "69": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008927",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:6MO | SURGERY:ROUX_EN_Y"
+    },
+    "70": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008933",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:6MO | SURGERY:ROUX_EN_Y"
+    },
+    "71": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008953",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:6MO | SURGERY:ROUX_EN_Y"
+    },
+    "72": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008957",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:6MO | SURGERY:ROUX_EN_Y"
+    },
+    "73": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008961",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:6MO | SURGERY:ROUX_EN_Y"
+    },
+    "74": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008965",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:6MO | SURGERY:ROUX_EN_Y"
+    },
+    "75": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008969",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:6MO | SURGERY:ROUX_EN_Y"
+    },
+    "76": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008977",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:6MO | SURGERY:ROUX_EN_Y"
+    },
+    "77": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008869",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:NO_SURGERY | SURGERY:LEAN_CONTROL"
+    },
+    "78": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008875",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:NO_SURGERY | SURGERY:LEAN_CONTROL"
+    },
+    "79": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008881",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:NO_SURGERY | SURGERY:LEAN_CONTROL"
+    },
+    "80": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008899",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:NO_SURGERY | SURGERY:LEAN_CONTROL"
+    },
+    "81": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008911",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:NO_SURGERY | SURGERY:LEAN_CONTROL"
+    },
+    "82": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008917",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:NO_SURGERY | SURGERY:LEAN_CONTROL"
+    },
+    "83": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008923",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:NO_SURGERY | SURGERY:LEAN_CONTROL"
+    },
+    "84": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008871",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:GASTRIC_BAND"
+    },
+    "85": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008877",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:GASTRIC_BAND"
+    },
+    "86": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008883",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:GASTRIC_BAND"
+    },
+    "87": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008935",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:GASTRIC_BAND"
+    },
+    "88": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008943",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:GASTRIC_BAND"
+    },
+    "89": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008947",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:GASTRIC_BAND"
+    },
+    "90": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008971",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:GASTRIC_BAND"
+    },
+    "91": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008865",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:ROUX_EN_Y"
+    },
+    "92": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008901",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:ROUX_EN_Y"
+    },
+    "93": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008907",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:ROUX_EN_Y"
+    },
+    "94": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008919",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:ROUX_EN_Y"
+    },
+    "95": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008925",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:ROUX_EN_Y"
+    },
+    "96": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008931",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:ROUX_EN_Y"
+    },
+    "97": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008951",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:ROUX_EN_Y"
+    },
+    "98": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008955",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:ROUX_EN_Y"
+    },
+    "99": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008959",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:ROUX_EN_Y"
+    },
+    "100": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008963",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:ROUX_EN_Y"
+    },
+    "101": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008967",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:ROUX_EN_Y"
+    },
+    "102": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008975",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:female | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:ROUX_EN_Y"
+    },
+    "103": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008891",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:male | POST_SURGERY_TIME:12MO | SURGERY:GASTRIC_BAND"
+    },
+    "104": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008897",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:male | POST_SURGERY_TIME:12MO | SURGERY:GASTRIC_BAND"
+    },
+    "105": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008915",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:male | POST_SURGERY_TIME:6MO | SURGERY:ROUX_EN_Y"
+    },
+    "106": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008941",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:male | POST_SURGERY_TIME:6MO | SURGERY:ROUX_EN_Y"
+    },
+    "107": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008887",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:male | POST_SURGERY_TIME:NO_SURGERY | SURGERY:LEAN_CONTROL"
+    },
+    "108": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008893",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:male | POST_SURGERY_TIME:NO_SURGERY | SURGERY:LEAN_CONTROL"
+    },
+    "109": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008905",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:male | POST_SURGERY_TIME:NO_SURGERY | SURGERY:LEAN_CONTROL"
+    },
+    "110": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008929",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:male | POST_SURGERY_TIME:NO_SURGERY | SURGERY:LEAN_CONTROL"
+    },
+    "111": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008889",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:male | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:GASTRIC_BAND"
+    },
+    "112": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008895",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:male | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:GASTRIC_BAND"
+    },
+    "113": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008913",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:male | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:ROUX_EN_Y"
+    },
+    "114": {
+        "study_id": "ST000009",
+        "local_sample_id": "S00008939",
+        "subject_type": "Human",
+        "factors": "AFTER_MEAL_TIME:NO_WAIT | gender:male | POST_SURGERY_TIME:PRE_SURGERY | SURGERY:ROUX_EN_Y"
+    }
+}

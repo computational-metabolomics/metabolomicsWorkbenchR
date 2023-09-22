@@ -1,0 +1,14 @@
+{
+    "study_id": "ST000001",
+    "study_title": "Fatb Induction Experiment (FatBIE)",
+    "study_type": "Genotype treatment",
+    "institute": "University of California, Davis",
+    "department": "Davis Genome Center",
+    "last_name": "Kind",
+    "first_name": "Tobias",
+    "email": "tkind@ucdavis.edu",
+    "phone": "",
+    "submit_date": "2013-01-15",
+    "study_summary": "This experiment tests the consequence of a mutation at the FatB gene (At1g08510) in the wound-response of Arabidopsis.  The FatB mutant allele (fatb KD J. Ohlrogge (Plant Cell 2003, Vol 15, 1020-1033)) was obtained from Dr. Katayonn Dehesh, University of California, Davis, Davis, CA.  This allele is in the Ws background.The standardized growth conditions are as follows: 1.  Seeds (between 14 and 16) are sown on media in 100 x 100 x 15mm square Falcon Petri Dishes (Fisher Scientific, catalogue #08-757-11A).  Seeds were arranged on the plates in a single horizontal line at the 1-cm mark from the top of the plate.2.  Each plate contains between 20 and 25-ml of sterile MS media containing 0.1% (w/v) sucrose.3.  Prior to sowing, seeds were sterilized by treating for 1 minute at room temperature with a 300-l solution of 50% (v/v) ethanol, this solution was removed and replaced with a 300-l solution consisting of 1% (v/v) Tween 20 (Fischer BioReagents, catalogue #BP33750), and 50% (v/v) bleach solution (Clorox), and incubated at room temperature for 10-minutes.  The seeds were then washed with three changes of 0.3-ml of sterile water.",
+    "subject_species": "Arabidopsis thaliana"
+}

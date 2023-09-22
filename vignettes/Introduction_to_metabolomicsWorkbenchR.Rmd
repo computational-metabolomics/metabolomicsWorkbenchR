@@ -21,8 +21,10 @@ vignette: >
 ---
 
 ```{r echo = FALSE,include=FALSE}
+suppressPackageStartupMessages(library(grid))
+suppressPackageStartupMessages(library(httptest))
 suppressPackageStartupMessages(library(metabolomicsWorkbenchR))
-library(grid)
+httptest::start_vignette('introduction')
 ```
 
 

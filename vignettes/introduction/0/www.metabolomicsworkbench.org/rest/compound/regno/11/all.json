@@ -1,0 +1,11 @@
+{
+    "regno": "11",
+    "formula": "C47H75N5O8",
+    "exactmass": "837.561565",
+    "inchi_key": "JLBSVDZUWJLOCF-ZLKQSCCRSA-N",
+    "name": "Dideoxymycobactin",
+    "sys_name": "[(2R)-4-oxo-4-[[(3S)-2-oxoazepan-3-yl]amino]butan-2-yl] (2S)-2-[[(4S)-2-(2-hydroxyphenyl)-4-methyl-5H-1,3-oxazole-4-carbonyl]amino]-6-[[(Z)-icos-2-enoyl]amino]hexanoate",
+    "lm_id": "LMFA00000015",
+    "pubchem_cid": "136029221",
+    "smiles": "CCCCCCCCCCCCCCCCC/C=C\\C(=O)NCCCC[C@H](NC(=O)[C@]1(C)COC(c2ccccc2O)=N1)C(=O)O[C@H](C)CC(=O)N[C@H]1CCCCNC1=O"
+}

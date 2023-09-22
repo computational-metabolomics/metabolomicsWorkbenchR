@@ -1,0 +1,146 @@
+{
+    "1": {
+        "study_id": "ST000001",
+        "local_sample_id": "LabF_115904",
+        "subject_type": "Plant",
+        "factors": "Arabidopsis Genotype:fatb-ko KD; At1g08510 | Plant Wounding Treatment:Control - Non-Wounded"
+    },
+    "2": {
+        "study_id": "ST000001",
+        "local_sample_id": "LabF_115909",
+        "subject_type": "Plant",
+        "factors": "Arabidopsis Genotype:fatb-ko KD; At1g08510 | Plant Wounding Treatment:Control - Non-Wounded"
+    },
+    "3": {
+        "study_id": "ST000001",
+        "local_sample_id": "LabF_115914",
+        "subject_type": "Plant",
+        "factors": "Arabidopsis Genotype:fatb-ko KD; At1g08510 | Plant Wounding Treatment:Control - Non-Wounded"
+    },
+    "4": {
+        "study_id": "ST000001",
+        "local_sample_id": "LabF_115919",
+        "subject_type": "Plant",
+        "factors": "Arabidopsis Genotype:fatb-ko KD; At1g08510 | Plant Wounding Treatment:Control - Non-Wounded"
+    },
+    "5": {
+        "study_id": "ST000001",
+        "local_sample_id": "LabF_115924",
+        "subject_type": "Plant",
+        "factors": "Arabidopsis Genotype:fatb-ko KD; At1g08510 | Plant Wounding Treatment:Control - Non-Wounded"
+    },
+    "6": {
+        "study_id": "ST000001",
+        "local_sample_id": "LabF_115929",
+        "subject_type": "Plant",
+        "factors": "Arabidopsis Genotype:fatb-ko KD; At1g08510 | Plant Wounding Treatment:Control - Non-Wounded"
+    },
+    "7": {
+        "study_id": "ST000001",
+        "local_sample_id": "LabF_115842",
+        "subject_type": "Plant",
+        "factors": "Arabidopsis Genotype:fatb-ko KD; At1g08510 | Plant Wounding Treatment:Wounded"
+    },
+    "8": {
+        "study_id": "ST000001",
+        "local_sample_id": "LabF_115847",
+        "subject_type": "Plant",
+        "factors": "Arabidopsis Genotype:fatb-ko KD; At1g08510 | Plant Wounding Treatment:Wounded"
+    },
+    "9": {
+        "study_id": "ST000001",
+        "local_sample_id": "LabF_115852",
+        "subject_type": "Plant",
+        "factors": "Arabidopsis Genotype:fatb-ko KD; At1g08510 | Plant Wounding Treatment:Wounded"
+    },
+    "10": {
+        "study_id": "ST000001",
+        "local_sample_id": "LabF_115857",
+        "subject_type": "Plant",
+        "factors": "Arabidopsis Genotype:fatb-ko KD; At1g08510 | Plant Wounding Treatment:Wounded"
+    },
+    "11": {
+        "study_id": "ST000001",
+        "local_sample_id": "LabF_115862",
+        "subject_type": "Plant",
+        "factors": "Arabidopsis Genotype:fatb-ko KD; At1g08510 | Plant Wounding Treatment:Wounded"
+    },
+    "12": {
+        "study_id": "ST000001",
+        "local_sample_id": "LabF_115867",
+        "subject_type": "Plant",
+        "factors": "Arabidopsis Genotype:fatb-ko KD; At1g08510 | Plant Wounding Treatment:Wounded"
+    },
+    "13": {
+        "study_id": "ST000001",
+        "local_sample_id": "LabF_115873",
+        "subject_type": "Plant",
+        "factors": "Arabidopsis Genotype:Wassilewskija (Ws) | Plant Wounding Treatment:Control - Non-Wounded"
+    },
+    "14": {
+        "study_id": "ST000001",
+        "local_sample_id": "LabF_115878",
+        "subject_type": "Plant",
+        "factors": "Arabidopsis Genotype:Wassilewskija (Ws) | Plant Wounding Treatment:Control - Non-Wounded"
+    },
+    "15": {
+        "study_id": "ST000001",
+        "local_sample_id": "LabF_115883",
+        "subject_type": "Plant",
+        "factors": "Arabidopsis Genotype:Wassilewskija (Ws) | Plant Wounding Treatment:Control - Non-Wounded"
+    },
+    "16": {
+        "study_id": "ST000001",
+        "local_sample_id": "LabF_115888",
+        "subject_type": "Plant",
+        "factors": "Arabidopsis Genotype:Wassilewskija (Ws) | Plant Wounding Treatment:Control - Non-Wounded"
+    },
+    "17": {
+        "study_id": "ST000001",
+        "local_sample_id": "LabF_115893",
+        "subject_type": "Plant",
+        "factors": "Arabidopsis Genotype:Wassilewskija (Ws) | Plant Wounding Treatment:Control - Non-Wounded"
+    },
+    "18": {
+        "study_id": "ST000001",
+        "local_sample_id": "LabF_115898",
+        "subject_type": "Plant",
+        "factors": "Arabidopsis Genotype:Wassilewskija (Ws) | Plant Wounding Treatment:Control - Non-Wounded"
+    },
+    "19": {
+        "study_id": "ST000001",
+        "local_sample_id": "LabF_115811",
+        "subject_type": "Plant",
+        "factors": "Arabidopsis Genotype:Wassilewskija (Ws) | Plant Wounding Treatment:Wounded"
+    },
+    "20": {
+        "study_id": "ST000001",
+        "local_sample_id": "LabF_115816",
+        "subject_type": "Plant",
+        "factors": "Arabidopsis Genotype:Wassilewskija (Ws) | Plant Wounding Treatment:Wounded"
+    },
+    "21": {
+        "study_id": "ST000001",
+        "local_sample_id": "LabF_115821",
+        "subject_type": "Plant",
+        "factors": "Arabidopsis Genotype:Wassilewskija (Ws) | Plant Wounding Treatment:Wounded"
+    },
+    "22": {
+        "study_id": "ST000001",
+        "local_sample_id": "LabF_115826",
+        "subject_type": "Plant",
+        "factors": "Arabidopsis Genotype:Wassilewskija (Ws) | Plant Wounding Treatment:Wounded"
+    },
+    "23": {
+        "study_id": "ST000001",
+        "local_sample_id": "LabF_115831",
+        "subject_type": "Plant",
+        "factors": "Arabidopsis Genotype:Wassilewskija (Ws) | Plant Wounding Treatment:Wounded"
+    },
+    "24": {
+        "study_id": "ST000001",
+        "local_sample_id": "LabF_115836",
+        "subject_type": "Plant",
+        "factors": "Arabidopsis Genotype:Wassilewskija (Ws) | Plant Wounding Treatment:Wounded"
+    }
+}

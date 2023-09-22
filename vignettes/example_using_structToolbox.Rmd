@@ -23,6 +23,8 @@ vignette: >
 ```{r echo = FALSE,include=FALSE}
 suppressPackageStartupMessages(library(metabolomicsWorkbenchR))
 library(structToolbox)
+library(httptest)
+httptest::start_vignette('structToolbox_example')
 ```
 
 
