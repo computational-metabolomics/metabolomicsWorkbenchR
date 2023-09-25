@@ -15,7 +15,7 @@
 The assigned to the slot.
 }
 \description{
-Gets the value of a slot from mw_base objects, provided they are not listed 
+Gets the value of a slot from mw_base objects, provided they are not listed
 as 'private'.
 }
 \examples{

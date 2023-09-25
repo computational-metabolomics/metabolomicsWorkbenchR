@@ -68,7 +68,7 @@ In `metabolomicsWorkBenchR` contexts are stored as a list, and a list of valid
 contexts can be obtained using the `names` function:
 
 ```{r}
-names(context)
+names(metabolomicsWorkbenchR::context)
 ```
 
 `input_item` is specific to a context. Valid items for a context can
@@ -109,7 +109,7 @@ As there are multiple datasets per study untargeted data needs to be requested
 by Analysis ID. We will request DatasetExperiment format so that we can use the 
 data directly with `structToolbox`.
 
-```{r}
+```{r,eval=FALSE}
 DE = do_query(
   context = 'study',
   input_item = 'analysis_id',
@@ -117,13 +117,18 @@ DE = do_query(
   output_item = 'untarg_DatasetExperiment'
 )
 DE
+```
 
+```{r,eval=TRUE,include=FALSE}
+DE=metabolomicsWorkbenchR:::AN000025
+DE=as.DatasetExperiment(DE)
+DE
 ```
 # Workflow
 Now we construct a minimal metabolomics workflow consisting of quality filtering,
 normalisation, imputation and scaling before applying PCA.
 
-```{r}
+```{r,warning=FALSE}
 # model sequence
 M = 
     mv_feature_filter(
